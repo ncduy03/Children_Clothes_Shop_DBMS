@@ -10,7 +10,7 @@ BEGIN
     UPDATE Product
     SET name = @name,
         inbound_price = @inbound_price,
-        outboud_price = @outbound_price,
+        outbound_price = @outbound_price,
         quantity = @quantity,
         product_category_id = @product_category_id
     WHERE product_id = @product_id;
