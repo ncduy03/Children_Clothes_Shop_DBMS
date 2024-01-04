@@ -1,4 +1,4 @@
-﻿USE BikeStores;
+USE BikeStores;
 DROP DATABASE ChildrenShopDBMS;
 CREATE DATABASE ChildrenShopDBMS;
 USE ChildrenShopDBMS;
@@ -11,7 +11,6 @@ CREATE TABLE Product_category(
 CREATE TABLE Product(
 	product_id INT PRIMARY KEY IDENTITY(1,1),
     name NVARCHAR(50) NOT NULL,
-    description NVARCHAR(50) NOT NULL,
 	inbound_price INT NOT NULL,
     outbound_price INT NOT NULL,
     quantity INT NOT NULL,
@@ -70,7 +69,7 @@ CREATE TABLE Inbound_Order(
     order_date DATE NOT NULL,
     total_price INT,
     status NVARCHAR(50) NOT NULL,
-    FOREIGN KEY (manufacturer_id) REFcreateERENCES Manufacturer(manufacturer_id)
+    FOREIGN KEY (manufacturer_id) REFERENCES Manufacturer(manufacturer_id)
 );
 
 CREATE TABLE Inbound_Order_Detail(
@@ -97,27 +96,27 @@ INSERT INTO Product_category (category_name) VALUES
 (N'Đồ bơi bé trai');
 
 
-INSERT INTO Product (name, description, inbound_price, outbound_price, quantity, product_category_id) VALUES 
-(N'Đồ bộ hoa hồng bé gái', N'Đồ bộ hoa hồng cho bé gái', 150000, 250000, 50, 1),
-(N'Váy đầm dâu tây bé gái', N'Váy đầm dâu tây cho bé gái', 180000, 280000, 40, 2),
-(N'Áo thun hình mèo bé gái', N'Áo thun hình mèo cho bé gái', 120000, 220000, 60, 3),
-(N'Bộ đồ bơi hình cá bé gái', N'Bộ đồ bơi hình cá cho bé gái', 200000, 300000, 30, 4),
-(N'Quần jeans bé gái', N'Quần jeans cho bé gái', 160000, 260000, 35, 5),
-(N'Đồ bộ siêu nhân bé trai', N'Đồ bộ siêu nhân cho bé trai', 140000, 240000, 55, 6),
-(N'Áo khoác hình xe cứu hỏa bé trai', N'Áo khoác hình xe cứu hỏa cho bé trai', 190000, 290000, 45, 7),
-(N'Quần thun bé trai', N'Quần thun cho bé trai', 110000, 210000, 65, 8),
-(N'Bộ đồ bơi hình siêu nhân bé trai', N'Bộ đồ bơi hình siêu nhân cho bé trai', 220000, 320000, 25, 9),
-(N'Váy đầm hoa bé gái', N'Váy đầm hoa cho bé gái', 170000, 270000, 50, 2),
-(N'Áo sơ mi bé gái', N'Áo sơ mi cho bé gái', 130000, 230000, 55, 3),
-(N'Bộ đồ bơi hình ngôi sao bé gái', N'Bộ đồ bơi hình ngôi sao cho bé gái', 210000, 310000, 35, 4),
-(N'Quần kaki bé gái', N'Quần kaki cho bé gái', 150000, 250000, 40, 5),
-(N'Áo thun siêu nhân bé trai', N'Áo thun siêu nhân cho bé trai', 120000, 220000, 60, 6),
-(N'Đồ bộ hoạt hình bé trai', N'Đồ bộ hoạt hình cho bé trai', 160000, 260000, 45, 7),
-(N'Áo len bé trai', N'Áo len cho bé trai', 100000, 200000, 70, 8),
-(N'Bộ đồ bơi hình thú cưng bé trai', N'Bộ đồ bơi hình thú cưng cho bé trai', 230000, 330000, 30, 9),
-(N'Váy đầm cầu vồng bé gái', N'Váy đầm cầu vồng cho bé gái', 180000, 280000, 40, 2),
-(N'Áo hoodie bé gái', N'Áo hoodie cho bé gái', 140000, 240000, 55, 3),
-(N'Quần jean wash bé gái', N'Quần jean wash cho bé gái', 170000, 270000, 50, 5);
+INSERT INTO Product (name, inbound_price, outbound_price, quantity, product_category_id) VALUES 
+(N'Đồ bộ hoa hồng bé gái', 150000, 250000, 50, 1),
+(N'Váy đầm dâu tây bé gái', 180000, 280000, 40, 2),
+(N'Áo thun hình mèo bé gái', 120000, 220000, 60, 3),
+(N'Bộ đồ bơi hình cá bé gái',200000, 300000, 30, 4),
+(N'Quần jeans bé gái', 160000, 260000, 35, 5),
+(N'Đồ bộ siêu nhân bé trai', 140000, 240000, 55, 6),
+(N'Áo khoác hình xe cứu hỏa bé trai', 190000, 290000, 45, 7),
+(N'Quần thun bé trai', 110000, 210000, 65, 8),
+(N'Bộ đồ bơi hình siêu nhân bé trai', 220000, 320000, 25, 9),
+(N'Váy đầm hoa bé gái',170000, 270000, 50, 2),
+(N'Áo sơ mi bé gái', 130000, 230000, 55, 3),
+(N'Bộ đồ bơi hình ngôi sao bé gái', 210000, 310000, 35, 4),
+(N'Quần kaki bé gái', 150000, 250000, 40, 5),
+(N'Áo thun siêu nhân bé trai', 120000, 220000, 60, 6),
+(N'Đồ bộ hoạt hình bé trai', 160000, 260000, 45, 7),
+(N'Áo len bé trai', 100000, 200000, 70, 8),
+(N'Bộ đồ bơi hình thú cưng bé trai', 230000, 330000, 30, 9),
+(N'Váy đầm cầu vồng bé gái', 180000, 280000, 40, 2),
+(N'Áo hoodie bé gái', 140000, 240000, 55, 3),
+(N'Quần jean wash bé gái', 170000, 270000, 50, 5);
 
 
 INSERT INTO Employee (name, address, phone, role) VALUES 
@@ -215,5 +214,3 @@ INSERT INTO Inbound_Order_Detail (inbound_order_id, product_id, quantity, price)
 (4, 4, 20, 5600000) -- Product: Đồ bơi bé gái
 -- Add more rows as needed
 ;
-
- 
