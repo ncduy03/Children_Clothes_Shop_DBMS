@@ -33,9 +33,10 @@ app.post('/nhanvien', async (req, res) => {
     InputData = req.body.input_data;
     console.log(InputData);
     // Thực hiện truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-    const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', {
-        searchName: InputData,
-    });
+    console.log(`EXEC dbo.FindEmployeesByName @searchName = '${InputData}'`);
+    const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', [{
+        searchName: InputData, type: sql.NVarChar, value: InputData
+    },]);
 
     res.render('nhanvien', { dulieu: result.recordset });
 }
@@ -79,8 +80,10 @@ app.get('/tongquan', (req, res) => {
 
 
 
-app.get('/doitac', (req, res) => {
-    res.render('doitac.ejs');
+app.get('/doitac', async (req, res) => {
+    const result = await sql.query(`SELECT * FROM Manufacturer`);
+
+    res.render('doitac', { dulieu: result.recordset });
 })
 
 /*app.post('/nhanvien', async (req, res) => {
@@ -105,8 +108,10 @@ app.get('/giaodich', (req, res) => {
     res.render('giaodich.ejs');
 })
 
-app.get('/kiemkho', (req, res) => {
-    res.render('kiemkho.ejs');
+app.get('/kiemkho', async(req, res) => {
+    const result = await sql.query(`SELECT * FROM Product`);
+
+    res.render('kiemkho', { dulieu: result.recordset });
 })
 
 /*app.get('/themnhanvien', (req, res) => {

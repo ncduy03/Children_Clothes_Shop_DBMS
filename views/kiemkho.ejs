@@ -98,48 +98,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>ABC1</td>
-                        <td>Áo Giáng sinh</td>
-                        <td>400,000</td>
-                        <td>600,000</td>
-                        <td>53</td>
-                    </tr>
-                    <tr>
-                        <td>NU12</td>
-                        <td>Áo thun</td>
-                        <td>300,000</td>
-                        <td>500,000</td>
-                        <td>102</td>
-                    </tr>
-                    <tr>
-                        <td>ABC1</td>
-                        <td>Áo Giáng sinh</td>
-                        <td>400,000</td>
-                        <td>600,000</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>ABC1</td>
-                        <td>Áo Giáng sinh</td>
-                        <td>400,000</td>
-                        <td>600,000</td>
-                        <td>196</td>
-                    </tr>
-                    <tr>
-                        <td>ABC1</td>
-                        <td>Áo Giáng sinh</td>
-                        <td>400,000</td>
-                        <td>600,000</td>
-                        <td>200</td>
-                    </tr>
-                    <tr>
-                        <td>ABC1</td>
-                        <td>Áo Giáng sinh</td>
-                        <td>400,000</td>
-                        <td>600,000</td>
-                        <td>300</td>
-                    </tr>
+                    <% for (let i=0; i < dulieu.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= dulieu[i].product_id %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].name %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].inbound_price %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].outbound_price %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].quantity %>
+                            </td>
+                        </tr>
+                        <% } %>
                 </tbody>
             </table>
         </div>

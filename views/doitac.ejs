@@ -73,8 +73,9 @@
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm đối tác</p>
+            <form action="/doitac" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" id="input_data" name="input_data" class="form-control" placeholder="Search">
+                    <input type="text" id="input_data" name="input_data2" class="form-control" placeholder="Search">
                     <button class="btn btn-outline-dark" type="submit">Find</button>
                 </div>
         </div>
@@ -93,13 +94,19 @@
                     <% for (let i=0; i < dulieu.length; i++) { %>
                         <tr>
                             <td>
-                                <%= dulieu[i].MaGV %>
+                                <%= dulieu[i].manufacturer_id %>
                             </td>
                             <td>
-                                <%= dulieu[i].MaDT %>
+                                <%= dulieu[i].manufacturer_name %>
                             </td>
                             <td>
-                                <%= dulieu[i].SoGio %>
+                                <%= dulieu[i].phone %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].address %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].email %>
                             </td>
                         </tr>
                         <% } %>
