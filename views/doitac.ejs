@@ -90,31 +90,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (data && data.length> 0) { %>
-                        <% dulieu.forEach(item=> { %>
-                            <tr>
-                                <td>
-                                    <%= item.manufacturer_id %>
-                                </td>
-                                <td>
-                                    <%= item.manufacturer_name %>
-                                </td>
-                                <td>
-                                    <%= item.phone %>
-                                </td>
-                                <td>
-                                    <%= item.address %>
-                                </td>
-                                <td>
-                                    <%= item.email %>
-                                </td>
-                            </tr>
-                            <% }); %>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="5">No data available</td>
-                                    </tr>
-                                    <% } %>
+                    <% for (let i=0; i < dulieu.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= dulieu[i].MaGV %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].MaDT %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].SoGio %>
+                            </td>
+                        </tr>
+                        <% } %>
                 </tbody>
             </table>
 

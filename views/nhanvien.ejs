@@ -80,40 +80,48 @@
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm nhân viên</p>
-            < <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search">
-                <button class="btn btn-outline-dark" type="submit">Find</button>
+            <form action="/nhanvien" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" name="input_data">
+                    <button class="btn btn-outline-dark" type="submit">Find</button>
+                </div>
         </div>
-    </div>
-    <div class="grid-item">
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Mã nhân viên</th>
-                    <th scope="col">Họ và tên</th>
-                    <th scope="col">Vị trí</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <% dulieu.forEach(item=> { %>
+        <div class="grid-item">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
                     <tr>
-                        <td>
-                            <%= item.MaGV %>
-                        </td>
-                        <td>
-                            <%= item.MaDT %>
-                        </td>
-                        <td>
-                            <%= item.SoGio %>
-                        </td>
+                        <th scope="col">Mã nhân viên</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Vị trí</th>
                     </tr>
-                    <% }); %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% for (let i=0; i < dulieu.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= dulieu[i].employee_id %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].name %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].address %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].phone %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].role %>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
 
 
-    </div>
+        </div>
     </div>
 
 

@@ -11,7 +11,7 @@ const config = {
     user: "sa",
     password: "123456",
     server: "localhost",
-    database: "GIANGVIEN",
+    database: "ChildrenShopDBMS",
     port: 1433, // Port mặc định của SQL Server
     options: {
         encrypt: false, // Nếu bạn sử dụng kết nối mật, đặt giá trị này thành true
@@ -28,17 +28,23 @@ sql.connect(config, (err) => {
 // Middleware để xử lý dữ liệu POST dưới dạng JSON
 
 // Endpoint POST để lấy dữ liệu từ cơ sở dữ liệu
-app.get('/nhanvien', async (req, res) => {
+app.post('/nhanvien', async (req, res) => {
+    let InputData;
+    InputData = req.body.input_data;
+    console.log(InputData);
     // Thực hiện truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-    const result = await sql.query('SELECT * FROM ThamGia');
-    console.log(result);
-    // Gửi dữ liệu đến file EJS để hiển thị
-    res.render('nhanvien', { dulieu: result.rows });
+    const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', {
+        searchName: InputData,
+    });
+
+    res.render('nhanvien', { dulieu: result.recordset });
 }
 
 );
-/*app.get('/nhanvien', (req, res) => {
-    res.render('nhanvien.ejs');
+app.get('/nhanvien', async (req, res) => {
+    const result = await sql.query(`SELECT * FROM Employee`);
+
+    res.render('nhanvien', { dulieu: result.recordset });
 })
 
 /*app.post('/nhanvien', (req, res) => {
