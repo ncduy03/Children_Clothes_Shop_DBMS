@@ -7,6 +7,6 @@ CREATE OR ALTER PROCEDURE AddProduct
     @product_category_id INT
 AS
 BEGIN
-    INSERT INTO Product (name, description, inbound_price, outboud_price, quantity, product_category_id)
+    INSERT INTO Product (name, description, inbound_price, outbound_price, quantity, product_category_id)
     VALUES (@name, @description, @inbound_price, @outbound_price, @quantity, @product_category_id);
 END;
