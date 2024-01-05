@@ -1,7 +1,14 @@
 CREATE OR ALTER PROCEDURE FindEmployeesByRole
-    @searchRole NVARCHAR(20)
+    @searchRole NVARCHAR(20) = NULL
 AS
 BEGIN 
-    SELECT * FROM Employee
-    WHERE role LIKE '%' + @searchRole + '%';
+    IF @searchRole IS NULL
+	BEGIN
+		SELECT * FROM Employee
+	END;
+	ELSE
+	BEGIN
+		SELECT * FROM Employee
+		WHERE role LIKE '%' + @searchRole + '%';
+	END;
 END;
