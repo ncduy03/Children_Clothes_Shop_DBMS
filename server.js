@@ -25,23 +25,20 @@ sql.connect(config, (err) => {
     }
 });
 
-app.post('/nhanvien', async (req, res) => {
-    let InputData;
-    InputData = req.body.input_data;
-    console.log(InputData);
-    // Thực hiện truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-    //console.log(`EXEC dbo.FindEmployeesByName @searchName = '${InputData}'`);
-    const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', [{
-        searchName: InputData, type: sql.NVarChar, value: InputData
-    },]);
-    res.render('nhanvien');
-})
-
-app.get('/nhanvien', async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Employee`);
-
-    res.render('nhanvien', { dulieu: result.recordset });
-})
+app.route('/nhanvien')
+    .post(async (req, res) => {
+        let InputData;
+        InputData = req.body.input_data;
+        console.log(InputData);
+        const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', [{
+            searchName: InputData, type: sql.NVarChar, value: InputData
+        },]);
+        res.render('nhanvien');
+    })
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Employee`);
+        res.render('nhanvien', { dulieu: result.recordset });
+    })
 
 
 app.get('/tongquan', (req, res) => {
@@ -58,25 +55,32 @@ app.get('/giaodich', (req, res) => {
     res.render('giaodich.ejs');
 })
 
-app.get('/kiemkho', async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Product`);
+app.route('/kiemkho')
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Product`);
+        res.render('kiemkho', { dulieu: result.recordset });
+    })
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData2 = req.body.input_data2;
+        const inputData3 = req.body.input_data3;
 
-    res.render('kiemkho', { dulieu: result.recordset });
-})
+        if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query('EXEC FindProductsByCategoryName @InputData');
+            res.render('kiemkho', { dulieu: result.recordset });
+        } else if (inputData3) {
+            request.input('InputData', sql.NVarChar, inputData3);
+            const result = await request.query('EXEC FindProductByID @InputData');
+            console.log(result);
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+        else {
+            const result = await sql.query('SELECT * FROM Product');
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+    });
 
-app.post('/kiemkho', async (req, res) => {
-    // Thực hiện truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-    /*const result = await sql.query('EXEC FindProductsByCategoryName @category_name', [{
-        category_name: InputData, type: sql.NVarChar(50), value: InputData
-    },]);*/
-    const request = new sql.Request();
-    const inputData = req.body.input_data2;
-    request.input('InputData', sql.NVarChar, inputData);
-    const result = await request.query('EXEC FindProductsByCategoryName @InputData');
-    console.log(result);
-    res.render('kiemkho', { dulieu: result.recordset });
-}
-)
 /*app.get('/themnhanvien', (req, res) => {
     res.render('themnhanvien.ejs');
 })
