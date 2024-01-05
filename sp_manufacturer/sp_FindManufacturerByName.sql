@@ -1,7 +1,14 @@
 CREATE OR ALTER PROCEDURE FindManufacturerByName
-    @searchName NVARCHAR(50)
+    @searchName NVARCHAR(50) = NULL
 AS
 BEGIN
-    SELECT * FROM Manufacturer
-    WHERE manufacturer_name LIKE '%' + @searchName + '%';
+    IF @searchName IS NULL
+	BEGIN
+		SELECT * FROM Manufacturer
+	END;
+	ELSE
+	BEGIN
+		SELECT * FROM Manufacturer
+		WHERE manufacturer_name LIKE '%' + @searchName + '%'
+	END;
 END;
