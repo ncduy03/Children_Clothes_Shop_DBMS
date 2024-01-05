@@ -1,7 +1,14 @@
 CREATE OR ALTER PROCEDURE FindInboundOrdersByStatus
-    @status NVARCHAR(50)
+    @status NVARCHAR(50) = NULL
 AS
 BEGIN
-    SELECT * FROM Inbound_Order
-    WHERE status = @status;
+    IF @status IS NULL
+	BEGIN
+		SELECT * FROM Inbound_Order
+	END;
+	ELSE
+	BEGIN
+		SELECT * FROM Inbound_Order
+		WHERE status LIKE '%' + @status + '%'
+	END;
 END;
