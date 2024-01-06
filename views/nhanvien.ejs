@@ -5,86 +5,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhân viên</title>
-    <link href="\style\style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-xxl bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/tongquan">
-                <img src="/img/navbar/logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            <a class="navbar-brand" href="./tongquan.html">
+                <img src="./img/navbar/logo.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
                 My Store
             </a>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/tongquan">
-                            <img src="/img/navbar/tongquan.svg">
+                            <img src="./img/navbar/tongquan.svg">
                             Tổng quan
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hanghoa">
+                            <img src="./img/navbar/box.svg">
+                            Hàng hóa
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <img src="/img/navbar/box.svg">
-                            Hàng hóa
+                            <img src="./img/navbar/giaodich.svg">
+                            Giao dịch
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/thietlapgia">
-                                    <img src="/img/navbar/thietlapgia.svg">
-                                    Thiết lập giá</a>
+                                <a class="dropdown-item" href="/nhaphang">
+                                    <img src="./img/navbar/thietlapgia.svg">
+                                    Nhập hàng
+                                </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/kiemkho">
-                                    <img src="/img/navbar/kiemkho.svg">
-                                    Kiểm kho</a>
+                                <a class="dropdown-item" href="/banhang">
+                                    <img src="./img/navbar/kiemkho.svg">
+                                    Bán hàng
+                                </a>
                             </li>
                         </ul>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/giaodich">
-                            <img src="/img/navbar/giaodich.svg">
-                            Giao dịch
-                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/doitac">
-                            <img src="/img/navbar/doitac.svg">
+                            <img src="./img/navbar/doitac.svg">
                             Đối tác
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/nhanvien">
-                            <img src="/img/navbar/nhanvien.svg">
-                            Nhân viên</a>
+                            <img src="./img/navbar/nhanvien.svg">
+                            Nhân viên
+                        </a>
                     </li>
                     </li>
                 </ul>
             </div>
+            <a class="nav-link" href="/login">Logout</a>
         </div>
     </nav>
-    <!-- <div class="d-flex justify-content-between align-items-center mt-3 ms-4">
-        <h2 class="fs-2">Nhân viên</h2>
-        <a href="/themnhanvien.html" class="btn btn-light">Thêm nhân viên</a>
-    </div> -->
+
     <p class="fs-2 mt-3 ms-4">Nhân viên</p>
 
-    <a href="/themnhanvien">
-        <button type="button" class="btn btn-light">Thêm nhân viên</button>
-    </a>
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Thêm nhân viên
+        </button>
+        <button type="button" class="btn btn-outline-secondary xoa-btn">
+            Xóa nhân viên
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm nhân viên</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="usr">Tên:</label>
+                            <input type="text" class="form-control" id="usr">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Vị trí:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Địa chỉ:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Số điện thoại:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Email:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm nhân viên</p>
-            <form action="/nhanvien" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search" name="input_data1">
-                    <button class="btn btn-outline-dark" type="submit">Find</button>
-                </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Họ và tên">
+                <button class="btn btn-outline-dark" type="submit">Find</button>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Vị trí">
+                <button class="btn btn-outline-dark" type="submit">Find</button>
+            </div>
         </div>
         <div class="grid-item">
             <table class="table table-striped table-hover table-bordered">
@@ -92,9 +143,10 @@
                     <tr>
                         <th scope="col">Mã nhân viên</th>
                         <th scope="col">Họ và tên</th>
+                        <th scope="col">Vị trí</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Số điện thoại</th>
-                        <th scope="col">Vị trí</th>
+                        <th scope="col" class="hidden">Chọn</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,19 +159,23 @@
                                 <%= dulieu[i].name %>
                             </td>
                             <td>
+                                <%= dulieu[i].role %>
+                            </td>
+                            <td>
                                 <%= dulieu[i].address %>
                             </td>
                             <td>
                                 <%= dulieu[i].phone %>
                             </td>
-                            <td>
-                                <%= dulieu[i].role %>
-                            </td>
+                            <td class="hidden"><label><input type="checkbox"></label></td>
+
                         </tr>
                         <% } %>
                 </tbody>
             </table>
-
+            <div class="hidden">
+                <button type="button" class="btn btn-sm">Xóa</button>
+            </div>
 
         </div>
     </div>
@@ -128,7 +184,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./index.js" charset="UTF-8"></script>
 </body>
 
 </html>

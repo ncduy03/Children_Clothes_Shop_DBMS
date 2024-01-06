@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đối tác</title>
+    <title>Hàng hóa</title>
     <link href="./style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -76,15 +76,14 @@
         </div>
     </nav>
 
-
-    <p class="fs-2 mt-3 ms-4">Đối tác</p>
-
+    <p class="fs-2 mt-3 ms-4">Hàng hóa</p>
+    <!-- button -->
     <div class="btn-group">
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Thêm đối tác
+            Thêm hàng hóa
         </button>
         <button type="button" class="btn btn-outline-secondary xoa-btn">
-            Xóa đối tác
+            Xóa hàng hóa
         </button>
     </div>
     <!-- Modal -->
@@ -92,25 +91,33 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm đối tác</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm nhân viên</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="usr">Tên:</label>
+                            <label for="usr">Mã hàng:</label>
                             <input type="text" class="form-control" id="usr">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Địa chỉ:</label>
+                            <label for="usr">Tên:</label>
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Số điện thoại:</label>
+                            <label for="usr">Phân loại:</label>
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Email:</label>
+                            <label for="usr">Giá nhập:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Giá bán:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Tồn kho:</label>
                             <input type="text" class="form-control">
                         </div>
                     </form>
@@ -121,11 +128,14 @@
             </div>
         </div>
     </div>
-
-
     <div class="grid-container">
         <div class="grid-item">
-            <p class="fs-5 ms-2">Tìm đối tác</p>
+            <p class="fs-5 ms-2">Nhóm hàng</p>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search">
+                <button class="btn btn-outline-dark" type="submit">Find</button>
+            </div>
+            <p class="fs-5 ms-2 mt-5">Mã hàng</p>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Search">
                 <button class="btn btn-outline-dark" type="submit">Find</button>
@@ -135,11 +145,12 @@
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Họ và tên</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Mã hàng</th>
+                        <th scope="col">Tên hàng</th>
+                        <th scope="col">Phân loại</th>
+                        <th scope="col">Giá nhập</th>
+                        <th scope="col">Giá bán</th>
+                        <th scope="col">Tồn kho</th>
                         <th scope="col" class="hidden">Chọn</th>
                     </tr>
                 </thead>
@@ -147,19 +158,22 @@
                     <% for (let i=0; i < dulieu.length; i++) { %>
                         <tr>
                             <td>
-                                <%= dulieu[i].manufacturer_id %>
+                                <%= dulieu[i].product_id %>
                             </td>
                             <td>
-                                <%= dulieu[i].manufacturer_name %>
+                                <%= dulieu[i].name %>
                             </td>
                             <td>
-                                <%= dulieu[i].phone %>
+                                <%= dulieu[i].category_name %>
                             </td>
                             <td>
-                                <%= dulieu[i].address %>
+                                <%= dulieu[i].inbound_price %>
                             </td>
                             <td>
-                                <%= dulieu[i].email %>
+                                <%= dulieu[i].outbound_price %>
+                            </td>
+                            <td>
+                                <%= dulieu[i].quantity %>
                             </td>
                             <td class="hidden"><label><input type="checkbox"></label></td>
                         </tr>
@@ -170,14 +184,16 @@
                 <button type="button" class="btn btn-sm">Xóa</button>
             </div>
         </div>
-
     </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="./index.js" charset="UTF-8"></script>
+</body>
 </body>
 
 </html>

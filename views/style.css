@@ -1,0 +1,20 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 250px auto;
+  gap: 1em;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.grid-item {
+  border: 1px solid black;
+}
+
+.tiny-pic {
+  height: 40px;
+  width: 40px;
+}
+
+.hidden {
+  display: none;
+}

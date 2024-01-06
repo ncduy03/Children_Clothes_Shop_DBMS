@@ -58,10 +58,10 @@ app.route('/nhanvien')
 
 
 
-app.route('/customer_order')
+app.route('/banhang')
     .get(async (req, res) => {
-        const result = await sql.query(`SELECT * FROM Customer_Order`);
-        res.render('', { dulieu: result.recordset });
+        const result = await sql.query(`SELECT c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        res.render('banhang', { dulieu: result.recordset });
     })
     .post(async (req, res) => {
         const request = new sql.Request();
@@ -70,25 +70,25 @@ app.route('/customer_order')
         if (inputData1) {
             request.input('InputData', sql.NVarChar, inputData1);
             const result = await request.query(`EXEC FindCustomerOrdersByStatus @InputData`);
-            res.render('', { dulieu: result.recordset });
+            res.render('banhang', { dulieu: result.recordset });
         }
         else if (inputData2) {
             request.input('InputData', sql.NVarChar, inputData2);
             const result = await request.query(`EXEC FindCustomerOrdersByTimePeriod @InputData`);
             console.log(result);
-            res.render('', { dulieu: result.recordset });
+            res.render('banhang', { dulieu: result.recordset });
         }
         else {
             const result = await request.query(`SELECT * FROM Customer_Order`);
-            res.render('', { dulieu: result.recordset });
+            res.render('banhang', { dulieu: result.recordset });
         }
     });
 
 
-app.route('/INBOUND_ORDER')
+app.route('/nhaphang')
     .get(async (req, res) => {
-        const result = await sql.query(`SELECT * FROM Inbound_Order`);
-        res.render('', { dulieu: result.recordset });
+        const result = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('nhaphang', { dulieu: result.recordset });
     })
     .post(async (req, res) => {
         const request = new sql.Request();
@@ -97,26 +97,27 @@ app.route('/INBOUND_ORDER')
         if (inputData1) {
             request.input('InputData', sql.NVarChar, inputData1);
             const result = await request.query(`EXEC FindInboundOrdersByStatus @InputData`);
-            res.render('', { dulieu: result.recordset });
+            res.render('nhaphang', { dulieu: result.recordset });
         }
         else if (inputData2) {
             request.input('InputData', sql.NVarChar, inputData2);
             const result = await request.query(`EXEC FindInboundOrdersByTimePeriod @InputData`);
             console.log(result);
-            res.render('', { dulieu: result.recordset });
+            res.render('nhaphang', { dulieu: result.recordset });
         }
         else {
             const result = await request.query(`SELECT * FROM Inbound_Order`);
-            res.render('', { dulieu: result.recordset });
+            res.render('nhaphang', { dulieu: result.recordset });
         }
     });
 
 
 
-app.route('/kiemkho')
+app.route('/hanghoa')
     .get(async (req, res) => {
-        const result = await sql.query(`SELECT * FROM Product`);
-        res.render('kiemkho', { dulieu: result.recordset });
+        const result = await sql.query(`SELECT p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id`);
+        console.log(result);
+        res.render('hanghoa', { dulieu: result.recordset });
     })
 
     .post(async (req, res) => {
@@ -127,23 +128,23 @@ app.route('/kiemkho')
         if (inputData1) {
             request.input('InputData', sql.NVarChar, inputData1);
             const result = await request.query(`EXEC FindProductsByCategoryName @InputData`);
-            res.render('kiemkho', { dulieu: result.recordset });
+            res.render('hanghoa', { dulieu: result.recordset });
         }
         else if (inputData2) {
             request.input('InputData', sql.NVarChar, inputData2);
             const result = await request.query(`EXEC FindProductByID @InputData`);
             console.log(result);
-            res.render('kiemkho', { dulieu: result.recordset });
+            res.render('hanghoa', { dulieu: result.recordset });
         }
         else if (inputData3) {
             request.input('InputData', sql.NVarChar, inputData3);
             const result = await request.query(`EXEC FindProductByName @InputData`);
             console.log(result);
-            res.render('kiemkho', { dulieu: result.recordset });
+            res.render('hanghoa', { dulieu: result.recordset });
         }
         else {
             const result = await request.query(`SELECT * FROM Product`);
-            res.render('kiemkho', { dulieu: result.recordset });
+            res.render('hanghoa', { dulieu: result.recordset });
         }
     });
 
