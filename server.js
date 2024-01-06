@@ -3,9 +3,10 @@ import sql from "mssql";
 import bodyParser from "body-parser";
 const app = express();
 const port = 3000;
-app.use(express.static("views"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("views"));
 app.set('view engine', 'ejs');
+app.use(express.json()); // Use the JSON body parser middleware
 
 const config = {
     user: "sa",
@@ -25,134 +26,152 @@ sql.connect(config, (err) => {
     }
 });
 
-// Middleware để xử lý dữ liệu POST dưới dạng JSON
-
-// Endpoint POST để lấy dữ liệu từ cơ sở dữ liệu
-app.post('/nhanvien', async (req, res) => {
-    let InputData;
-    InputData = req.body.input_data;
-    console.log(InputData);
-    // Thực hiện truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-    console.log(`EXEC dbo.FindEmployeesByName @searchName = '${InputData}'`);
-    const result = await sql.query('EXEC dbo.FindEmployeesByName @searchName', [{
-        searchName: InputData, type: sql.NVarChar, value: InputData
-    },]);
-
-    res.render('nhanvien', { dulieu: result.recordset });
-}
-
-);
-app.get('/nhanvien', async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Employee`);
-
-    res.render('nhanvien', { dulieu: result.recordset });
-})
-
-/*app.post('/nhanvien', (req, res) => {
-    const singleData = {
-        MaGV: '001',
-        MaDT: 'John Doe',
-        SoGio: 'Manager'
-    };
-
-    res.render('nhanvien', { singleData });
-});*/
-app.get('/themnhanvien', async (req, res) => {
-
-    // Thiết lập thông tin kết nối
-
-    // Tạo một pool kết nối
-    pool = await sql.connect(config);
-
-    // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-    const result = await pool.query('SELECT * FROM Customer;');
-
-    // Render trang HTML với dữ liệu lấy từ cơ sở dữ liệu
-    res.send(`<html><body><table border="1"><tr><th>ID</th><th>Name</th><th>Category</th></tr>${result.recordset.map(row => `<tr><td>${row.customer_id}</td><td>${row.name}</td><td>${row.phone}</td></tr>`).join('')}</table></body></html>`);
-
-});
-
-
 app.get('/tongquan', (req, res) => {
     res.render('tongquan.ejs');
 })
 
+app.route('/nhanvien')
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData1 = req.body.input_data1;
+        const inputData2 = req.body.input_data2;
+        if (inputData1) {
+            request.input('InputData', sql.NVarChar, inputData1);
+            const result = await request.query(`EXEC FindEmployeesByName @InputData`);
+            res.render('nhanvien', { dulieu: result.recordset });
+        }
+        else if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query(`EXEC FindEmployeesByRole @InputData`);
+            res.render('nhanvien', { dulieu: result.recordset });
+        }
+        else {
+            const result = await request.query(`SELECT * FROM Employee`);
+            res.render('nhanvien', { dulieu: result.recordset });
+        }
+    })
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Employee`);
+        res.render('nhanvien', { dulieu: result.recordset });
+    })
 
 
 
-app.get('/doitac', async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Manufacturer`);
 
-    res.render('doitac', { dulieu: result.recordset });
-})
-
-/*app.post('/nhanvien', async (req, res) => {
-
-    let inputData;
-    inputData = req.body.input_data;
-    console.log(inputData);
-    /*let ketqua = await db.query('EXEC FindManufacturerByName @searchName', {
-        searchName: inputData
+app.route('/customer_order')
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Customer_Order`);
+        res.render('', { dulieu: result.recordset });
+    })
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData1 = req.body.input_data1;
+        const inputData2 = req.body.input_data2;
+        if (inputData1) {
+            request.input('InputData', sql.NVarChar, inputData1);
+            const result = await request.query(`EXEC FindCustomerOrdersByStatus @InputData`);
+            res.render('', { dulieu: result.recordset });
+        }
+        else if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query(`EXEC FindCustomerOrdersByTimePeriod @InputData`);
+            console.log(result);
+            res.render('', { dulieu: result.recordset });
+        }
+        else {
+            const result = await request.query(`SELECT * FROM Customer_Order`);
+            res.render('', { dulieu: result.recordset });
+        }
     });
-    let result;
-    result = await long.query(`SELECT * FROM Manufacturer`);
-    //res.send(`<html><body><table border="1"><tr><th>ID</th><th>Name</th><th>Category</th></tr>${result.recordset.map(row => `<tr><td>${row.manufacturer_id}</td><td>${row.manufacturer_name}</td><td>${row.phone}</td></tr>`).join('')}</table></body></html>`);
-    //console.log(result);
-    res.redirect('nhanvien', { dulieu: result.rows });
 
 
-});*/
-
-
-app.get('/giaodich', (req, res) => {
-    res.render('giaodich.ejs');
-})
-
-app.get('/kiemkho', async(req, res) => {
-    const result = await sql.query(`SELECT * FROM Product`);
-
-    res.render('kiemkho', { dulieu: result.recordset });
-})
-
-/*app.get('/themnhanvien', (req, res) => {
-    res.render('themnhanvien.ejs');
-})
-*/
-app.get('/thietlapgia', (req, res) => {
-    res.render('thietlapgia.ejs');
-})
-/*app.get('/tongquan', (req, res) => {
-    res.sendFile(__dirname + '/public/tongquan.html'); // Adjust the path as needed
-});
-
-app.get('/doitac', (req, res) => {
-    res.sendFile(__dirname + '/public/doitac.html'); // Adjust the path as needed
-});
-
-app.get('/giaodich', (req, res) => {
-    res.sendFile(__dirname + '/public/giaodich.html'); // Adjust the path as needed
-});
-
-app.get('/kiemkho', (req, res) => {
-    res.sendFile(__dirname + '/public/kiemkho.html'); // Adjust the path as needed
-});
-
-app.get('/nhanvien', (req, res) => {
-    res.sendFile(__dirname + '/public/nhanvien.html'); // Adjust the path as needed
-});
-
-app.get('/themnhanvien', (req, res) => {
-    res.sendFile(__dirname + '/public/themnhanvien.html'); // Adjust the path as needed
-});
-
-app.get('/thietlapgia', (req, res) => {
-    res.sendFile(__dirname + '/public/thietlapgia.html'); // Adjust the path as needed
-});
-
-*/
+app.route('/INBOUND_ORDER')
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Inbound_Order`);
+        res.render('', { dulieu: result.recordset });
+    })
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData1 = req.body.input_data1;
+        const inputData2 = req.body.input_data2;
+        if (inputData1) {
+            request.input('InputData', sql.NVarChar, inputData1);
+            const result = await request.query(`EXEC FindInboundOrdersByStatus @InputData`);
+            res.render('', { dulieu: result.recordset });
+        }
+        else if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query(`EXEC FindInboundOrdersByTimePeriod @InputData`);
+            console.log(result);
+            res.render('', { dulieu: result.recordset });
+        }
+        else {
+            const result = await request.query(`SELECT * FROM Inbound_Order`);
+            res.render('', { dulieu: result.recordset });
+        }
+    });
 
 
 
+app.route('/kiemkho')
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Product`);
+        res.render('kiemkho', { dulieu: result.recordset });
+    })
+
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData1 = req.body.input_data1;
+        const inputData2 = req.body.input_data2;
+        const inputData3 = req.body.input_data3;
+        if (inputData1) {
+            request.input('InputData', sql.NVarChar, inputData1);
+            const result = await request.query(`EXEC FindProductsByCategoryName @InputData`);
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+        else if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query(`EXEC FindProductByID @InputData`);
+            console.log(result);
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+        else if (inputData3) {
+            request.input('InputData', sql.NVarChar, inputData3);
+            const result = await request.query(`EXEC FindProductByName @InputData`);
+            console.log(result);
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+        else {
+            const result = await request.query(`SELECT * FROM Product`);
+            res.render('kiemkho', { dulieu: result.recordset });
+        }
+    });
+
+
+app.route('/doitac')
+    .post(async (req, res) => {
+        const request = new sql.Request();
+        const inputData1 = req.body.input_data1;
+        const inputData2 = req.body.input_data2;
+        if (inputData1) {
+            request.input('InputData', sql.NVarChar, inputData1);
+            const result = await request.query(`EXEC FindManufacturerByName @InputData`);
+            res.render('doitac', { dulieu: result.recordset });
+        }
+        else if (inputData2) {
+            request.input('InputData', sql.NVarChar, inputData2);
+            const result = await request.query(`EXEC FindManufacturerByPhone @InputData`);
+            res.render('doitac', { dulieu: result.recordset });
+        }
+        else {
+            const result = await request.query(`SELECT * FROM Manufacturer`);
+            res.render('doitac', { dulieu: result.recordset });
+        }
+    })
+    .get(async (req, res) => {
+        const result = await sql.query(`SELECT * FROM Manufacturer`);
+        res.render('doitac', { dulieu: result.recordset });
+    })
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
