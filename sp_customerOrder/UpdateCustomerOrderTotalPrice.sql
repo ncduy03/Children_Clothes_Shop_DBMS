@@ -1,6 +1,6 @@
 CREATE TRIGGER UpdateOrderTotalPrice
 ON Customer_Order_Detail
-FOR INSERT, UPDATE, DELETE
+FOR INSERT, UPDATE
 AS
 BEGIN
 
