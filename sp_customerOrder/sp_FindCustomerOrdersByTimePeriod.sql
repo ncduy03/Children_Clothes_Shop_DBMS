@@ -5,21 +5,26 @@ AS
 BEGIN
     IF @start_date IS NULL AND @end_date IS NULL
 	BEGIN
-		SELECT * FROM Customer_Order
+		SELECT CO.customer_order_id, C.name, CO.order_date, CO.total_price, CO.status
+		FROM Customer_Order CO, Customer C
+		WHERE CO.customer_id = C.customer_id
 	END;
 	ELSE IF @start_date IS NULL AND @end_date IS NOT NULL
 	BEGIN
-		SELECT * FROM Customer_Order
-		WHERE order_date <= @end_date
+		SELECT CO.customer_order_id, C.name, CO.order_date, CO.total_price, CO.status
+		FROM Customer_Order CO, Customer C
+		WHERE CO.customer_id = C.customer_id AND CO.order_date <= @end_date
 	END;
 	ELSE IF @start_date IS NOT NULL AND @end_date IS NULL
 	BEGIN
-		SELECT * FROM Customer_Order
-		WHERE order_date >= @start_date
+		SELECT CO.customer_order_id, C.name, CO.order_date, CO.total_price, CO.status
+		FROM Customer_Order CO, Customer C
+		WHERE CO.customer_id = C.customer_id AND CO.order_date >= @start_date
 	END;
 	ELSE
 	BEGIN
-		SELECT * FROM Customer_Order
-		WHERE order_date BETWEEN @start_date AND @end_date
+		SELECT CO.customer_order_id, C.name, CO.order_date, CO.total_price, CO.status
+		FROM Customer_Order CO, Customer C
+		WHERE CO.customer_id = C.customer_id AND CO.order_date BETWEEN @start_date AND @end_date
 	END;
 END;
