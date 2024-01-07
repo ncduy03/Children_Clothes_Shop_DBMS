@@ -1,4 +1,3 @@
-﻿INSERT INTO Customer_Order_Detail (customer_order_id, product_id, quantity, price) VALUES 
 INSERT INTO Customer_Order_Detail (customer_order_id, product_id, quantity)
 VALUES
 (1, 1, 3),
