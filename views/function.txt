@@ -1,0 +1,30 @@
+Bổ sung
+- Login (cả ở navbar)
+
+Nhân viên
+- Bổ sung thêm nhân viên
+- Xóa nhân viên
+
+Tổng quan
+- Hiện doanh thu theo ngày or tuần or tháng or năm maybe
+
+Thiết lập giá
+- Thêm sản phẩm, hình ảnh và giá tiền
+- Xóa sản phẩm
+- Update hình ảnh, giá tiền
+
+Kiểm kho (done)
+- Kiểm tra trong kho còn bao nhiêu sản phẩm
+
+Giao dịch
+- Chia làm nhập hàng và bán hàng
+- Nhập hàng là hiện bảng inbound_order, thêm chỗ để nhập thêm hàng, hiện chi tiết (idk)
+- Tương tự với phần bán hàng
+
+Đối tác
+- Thêm đối tác, xóa đối tác
+
+Hàng hóa
+- Thêm cột phân loại
+- Thêm nút sắp xếp theo giá (thấp - cao, cao - thấp)
+- Lọc theo loại quần áo ()

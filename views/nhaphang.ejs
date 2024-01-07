@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đối tác</title>
+    <title>Nhập hàng</title>
     <link href="./style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -77,40 +77,37 @@
     </nav>
 
 
-    <p class="fs-2 mt-3 ms-4">Đối tác</p>
+    <p class="fs-2 mt-3 ms-4">Nhập hàng</p>
+    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Thêm đơn hàng
+    </button>
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Thêm đối tác
-        </button>
-        <button type="button" class="btn btn-outline-secondary xoa-btn">
-            Xóa đối tác
-        </button>
-    </div>
+
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm đối tác</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm đơn hàng</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="usr">Tên:</label>
+                            <label for="usr">Tên đối tác:</label>
                             <input type="text" class="form-control" id="usr">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Địa chỉ:</label>
+                            <label for="usr">Thời gian:</label>
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Số điện thoại:</label>
+                            <label for="usr">Tổng số tiền:</label>
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="usr">Email:</label>
+                            <label for="usr">Trạng thái:</label>
                             <input type="text" class="form-control">
                         </div>
                     </form>
@@ -122,62 +119,59 @@
         </div>
     </div>
 
-
     <div class="grid-container">
         <div class="grid-item">
-            <p class="fs-5 ms-2">Tìm đối tác</p>
+            <p class="fs-5 ms-2">Tìm đơn hàng</p>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search">
-                <button class="btn btn-outline-dark" type="submit">Find</button>
+                <input type="text" class="form-control" placeholder="Time start">
             </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Time end">
+            </div>
+            <button class="btn btn-outline-dark" type="submit">Find</button>
         </div>
+
         <div class="grid-item">
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Họ và tên</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="hidden">Chọn</th>
+                        <th scope="col">Mã hóa đơn</th>
+                        <th scope="col">Tên đối tác</th>
+                        <th scope="col">Thời gian</th>
+                        <th scope="col">Tổng số tiền</th>
+                        <th scope="col">Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for (let i=0; i < dulieu.length; i++) { %>
                         <tr>
                             <td>
-                                <%= dulieu[i].manufacturer_id %>
+                                <%= dulieu[i].inbound_order_id %>
                             </td>
                             <td>
                                 <%= dulieu[i].manufacturer_name %>
                             </td>
                             <td>
-                                <%= dulieu[i].phone %>
+                                <%= dulieu[i].order_date %>
                             </td>
                             <td>
-                                <%= dulieu[i].address %>
+                                <%= dulieu[i].total_price %>
                             </td>
                             <td>
-                                <%= dulieu[i].email %>
+                                <%= dulieu[i].status %>
                             </td>
-                            <td class="hidden"><label><input type="checkbox"></label></td>
                         </tr>
                         <% } %>
                 </tbody>
             </table>
-            <div class="hidden">
-                <button type="button" class="btn btn-sm">Xóa</button>
-            </div>
         </div>
-
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="./index.js" charset="UTF-8"></script>
+
 </body>
 
 </html>
