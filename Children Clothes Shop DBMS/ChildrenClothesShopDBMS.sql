@@ -37,7 +37,7 @@ CREATE TABLE Customer_Order(
 	customer_order_id INT PRIMARY KEY IDENTITY(1,1),
     customer_id INT NOT NULL,
     order_date DATE NOT NULL,
-    total_price BIGINT,
+    total_price BIGINT DEFAULT 0,
     status NVARCHAR(50) NOT NULL,
     employee_id INT NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
@@ -49,7 +49,7 @@ CREATE TABLE Customer_Order_Detail(
 	customer_order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-	price BIGINT,
+	price BIGINT DEFAULT 0,
     PRIMARY KEY (customer_order_id, product_id),
 	FOREIGN KEY (customer_order_id) REFERENCES Customer_Order(customer_order_id),
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
@@ -67,7 +67,7 @@ CREATE TABLE Inbound_Order(
 	inbound_order_id INT PRIMARY KEY IDENTITY(1,1),
     manufacturer_id INT NOT NULL,
     order_date DATE NOT NULL,
-    total_price BIGINT,
+    total_price BIGINT DEFAULT 0,
     status NVARCHAR(50) NOT NULL,
     FOREIGN KEY (manufacturer_id) REFERENCES Manufacturer(manufacturer_id)
 );
@@ -76,7 +76,7 @@ CREATE TABLE Inbound_Order_Detail(
 	inbound_order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-	price BIGINT,
+	price BIGINT DEFAULT 0,
     PRIMARY KEY (inbound_order_id, product_id),
 	FOREIGN KEY (inbound_order_id) REFERENCES Inbound_Order(inbound_order_id),
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
