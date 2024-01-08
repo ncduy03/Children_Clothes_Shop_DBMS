@@ -17,6 +17,21 @@ router.get('/khachhang', async (req, res) => {
     const result = await sql.query(`SELECT * FROM Customer`);
     res.render('khachhang', { dulieu: result.recordset });
 })
+router.post('/khachhang/add', async (req, res) => {
+    const request = new sql.Request();
+    const inputData1 = req.body.ten;
+    const inputData2 = req.body.phone;
+    request.input('name', sql.NVarChar, inputData1);
+    request.input('SDT', sql.NVarChar, inputData2);
+    const result = await request.query(`
+    EXEC AddCustomer 
+    @customer_name = @name, 
+    @phone = @SDT`);
+    if (result) console.log("Trueeee");
+    const result1 = await sql.query(`SELECT * FROM Customer`);
+    res.render('khachhang', { dulieu: result1.recordset });
+})
+
 router.post('/khachhang', async (req, res) => {
     const request = new sql.Request();
     const inputData1 = req.body.input_data1;
