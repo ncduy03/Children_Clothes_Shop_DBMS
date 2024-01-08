@@ -36,5 +36,30 @@ router.get("/doitac", async (req, res) => {
     const result = await sql.query(`SELECT * FROM Manufacturer`);
     res.render('doitac', { dulieu: result.recordset });
 })
+router.post("/doitac/add", async (req, res) => {
+    const Ten = req.body.ten;
+    const Phone = req.body.phone;
+    const Address = req.body.address;
+    const Email = req.body.email;
+    const request = new sql.Request();
+    request.input('name', sql.NVarChar, Ten);
+    request.input('SDT', sql.NVarChar, Phone);
+    request.input('diachi', sql.NVarChar, Address);
+    request.input('email', sql.NVarChar, Email);
+    const result = await request.query(`
+    EXEC AddManufacturer 
+    @manufacturer_name = @name, 
+    @phone = @SDT, 
+    @address = @diachi, 
+    @email = @email
+`);
+    if (result) console.log("Trueeee");
+    const result1 = await sql.query(`SELECT * FROM Manufacturer`);
+    res.render('doitac', { dulieu: result1.recordset });
+})
 
+router.get("/doitac/add", async (req, res) => {
+    const result = await sql.query(`SELECT * FROM Manufacturer`);
+    res.render('doitac', { dulieu: result.recordset });
+})
 export default router;
