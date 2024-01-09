@@ -1,4 +1,4 @@
-﻿INSERT INTO Customer_Order (customer_id, order_date, status, employee_id) VALUES 
+INSERT INTO Customer_Order (customer_id, order_date, status, employee_id) VALUES 
 (1, '2023-06-08', N'Đang xử lý', 4),
 (2, '2023-07-27', N'Đang giao', 9),
 (3, '2023-12-29', N'Đang giao', 16),
@@ -1001,10 +1001,11 @@
 (1000, '2023-02-11', N'Đang giao', 10);
 
 BULK INSERT Customer_Order
-FROM 'customer_order.txt'
+FROM 'C:\Users\nhhoa\Documents\SQL Server Management Studio\Children Clothes Shop DBMS\customer_order.txt'
 WITH
 	(
 	FIELDTERMINATOR = ',',
-	ROWTERMINATOR = ';\n',
-	CODEPAGE = '65001'
+	ROWTERMINATOR = '\n',
+	CODEPAGE = '65001',
+	FIRE_TRIGGERS
 	)
