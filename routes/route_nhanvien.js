@@ -37,5 +37,26 @@ router.get("/nhanvien", async (req, res) => {
     res.render('nhanvien', { dulieu: result.recordset });
 })
 
+router.post("/nhanvien/add", async (req, res) => {
+    const Name = req.body.ten;
+    const Address = req.body.diachi;
+    const Phone = req.body.phone;
+    const Role = req.body.role;
+    const request = new sql.Request();
+    request.input('name', sql.NVarChar, Name);
+    request.input('SDT', sql.NVarChar, Phone);
+    request.input('diachi', sql.NVarChar, Address);
+    request.input('role', sql.NVarChar, Role);
+    const result = await request.query(`
+    EXEC AddEmployee 
+    @name = @name, 
+    @address = @diachi, 
+    @phone = @SDT, 
+    @role = @role
+`);
+    if (result) console.log("Trueeee");
+    const result1 = await sql.query(`SELECT * FROM Employee`);
+    res.render('nhanvien', { dulieu: result1.recordset });
+})
 
 export default router;
