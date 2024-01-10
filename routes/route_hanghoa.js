@@ -1,5 +1,6 @@
 import express from "express";
 import sql from "mssql";
+
 const config = {
     user: "sa",
     password: "123456",
@@ -12,10 +13,7 @@ const config = {
 };
 sql.connect(config);
 const router = express.Router()
-router.get("/hanghoa", async (req, res) => {
-    const result = await sql.query(`SELECT p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id`);
-    res.render('hanghoa', { dulieu: result.recordset });
-})
+
 router.get("/hanghoa/them", async (req, res) => {
     const result = await sql.query(`SELECT p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id`);
     res.render('hanghoa', { dulieu: result.recordset });

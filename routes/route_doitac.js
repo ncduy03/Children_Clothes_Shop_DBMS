@@ -32,10 +32,7 @@ router.post("/doitac", async (req, res) => {
         res.render('doitac', { dulieu: result.recordset });
     }
 })
-router.get("/doitac", async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Manufacturer`);
-    res.render('doitac', { dulieu: result.recordset });
-})
+
 router.post("/doitac/add", async (req, res) => {
     const Ten = req.body.ten;
     const Phone = req.body.phone;
