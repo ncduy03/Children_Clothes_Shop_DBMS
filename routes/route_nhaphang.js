@@ -1,5 +1,6 @@
 import express from "express";
 import sql from "mssql";
+
 const config = {
     user: "sa",
     password: "123456",
@@ -12,10 +13,7 @@ const config = {
 };
 sql.connect(config);
 const router = express.Router()
-router.get("/nhaphang", async (req, res) => {
-    const result = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
-    res.render('nhaphang', { dulieu: result.recordset });
-})
+
 router.post("/nhaphang", async (req, res) => {
     const request = new sql.Request();
     const inputData1 = req.body.input_data1;

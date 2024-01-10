@@ -1,7 +1,6 @@
 import express from "express";
 import sql from "mssql";
 const router = express.Router()
-
 const config = {
     user: "sa",
     password: "123456",
@@ -32,10 +31,7 @@ router.post("/nhanvien", async (req, res) => {
         res.render('nhanvien', { dulieu: result.recordset });
     }
 })
-router.get("/nhanvien", async (req, res) => {
-    const result = await sql.query(`SELECT * FROM Employee`);
-    res.render('nhanvien', { dulieu: result.recordset });
-})
+
 
 router.post("/nhanvien/add", async (req, res) => {
     const Name = req.body.ten;
