@@ -1,5 +1,14 @@
 import express from "express";
 import sql from "mssql";
+function requireLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+        // Người dùng đã đăng nhập
+        return next();
+    } else {
+        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        res.render('login');
+    }
+}
 const config = {
     user: "sa",
     password: "123456",
@@ -12,7 +21,7 @@ const config = {
 };
 sql.connect(config);
 const router = express.Router()
-router.get("/nhaphang", async (req, res) => {
+router.get("/nhaphang", requireLogin, async (req, res) => {
     const result = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
     res.render('nhaphang', { dulieu: result.recordset });
 })

@@ -1,5 +1,14 @@
 import express from "express";
 import sql from "mssql";
+function requireLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+        // Người dùng đã đăng nhập
+        return next();
+    } else {
+        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        res.render('login');
+    }
+}
 const config = {
     user: "sa",
     password: "123456",
@@ -13,7 +22,7 @@ const config = {
 sql.connect(config);
 const router = express.Router()
 
-router.get('/khachhang', async (req, res) => {
+router.get('/khachhang', requireLogin, async (req, res) => {
     const result = await sql.query(`SELECT * FROM Customer`);
     res.render('khachhang', { dulieu: result.recordset });
 })

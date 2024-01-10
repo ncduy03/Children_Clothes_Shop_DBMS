@@ -1,5 +1,14 @@
 import express from "express";
 import sql from "mssql";
+function requireLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+        // Người dùng đã đăng nhập
+        return next();
+    } else {
+        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        res.render('login');
+    }
+}
 const config = {
     user: "sa",
     password: "123456",
@@ -32,7 +41,7 @@ router.post("/doitac", async (req, res) => {
         res.render('doitac', { dulieu: result.recordset });
     }
 })
-router.get("/doitac", async (req, res) => {
+router.get("/doitac", requireLogin, async (req, res) => {
     const result = await sql.query(`SELECT * FROM Manufacturer`);
     res.render('doitac', { dulieu: result.recordset });
 })
@@ -58,7 +67,7 @@ router.post("/doitac/add", async (req, res) => {
     res.render('doitac', { dulieu: result1.recordset });
 })
 
-router.get("/doitac/add", async (req, res) => {
+router.get("/doitac/add", requireLogin, async (req, res) => {
     const result = await sql.query(`SELECT * FROM Manufacturer`);
     res.render('doitac', { dulieu: result.recordset });
 })
