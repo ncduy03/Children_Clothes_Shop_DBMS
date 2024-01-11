@@ -1,4 +1,4 @@
-﻿INSERT INTO Product (name, inbound_price, outbound_price, quantity, product_category_id) VALUES 
+INSERT INTO Product (name, inbound_price, outbound_price, quantity, product_category_id) VALUES 
 (N'Đồ bộ hoa hồng bé gái', 150000, 250000, 50, 1),
 (N'Váy đầm dâu tây bé gái', 180000, 280000, 40, 2),
 (N'Áo thun hình mèo bé gái', 120000, 220000, 60, 3),
