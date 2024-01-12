@@ -60,7 +60,5 @@ router.get("/doitac/add", async (req, res) => {
     res.render('doitac', { dulieu: result.recordset });
 })
 
-router.post("/doitac/xoa", async(req, res)=>{
-    const result = await sql.query
-})
+
 export default router;

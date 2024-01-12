@@ -49,5 +49,15 @@ router.post('/khachhang', async (req, res) => {
     }
 })
 
+router.post("/khachhang/xoa", async (req, res) => {
+    const Xoa = req.body.xoa;
+    const request = new sql.Request();
+    request.input('customer_id', sql.NVarChar, Xoa);
+    const result = await request.query(`EXEC DeleteCustomer @customer_id = @customer_id
+    `);
+    if (result) console.log("Trueeee");
+    const result1 = await sql.query(`SELECT * FROM Customer`);
+    res.render('khachhang', { dulieu: result1.recordset });
+})
 export default router;
 
