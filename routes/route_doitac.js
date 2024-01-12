@@ -59,4 +59,6 @@ router.get("/doitac/add", async (req, res) => {
     const result = await sql.query(`SELECT * FROM Manufacturer`);
     res.render('doitac', { dulieu: result.recordset });
 })
+
+
 export default router;

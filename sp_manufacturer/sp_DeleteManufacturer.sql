@@ -1,7 +1,9 @@
 CREATE OR ALTER PROCEDURE DeleteManufacturer
-    @manufacturer_id INT
+    @phone INT
 AS
 BEGIN
     DELETE FROM Manufacturer
-    WHERE manufacturer_id = @manufacturer_id;
+    WHERE phone = @phone;
 END;
+
+EXEC DeleteManufacturer '0123456703'
