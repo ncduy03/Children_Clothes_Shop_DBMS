@@ -44,6 +44,7 @@ router.post("/hanghoa", async (req, res) => {
         res.render('hanghoa', { dulieu: result.recordset });
     }
 });
+
 router.post('/hanghoa/them', async (req, res) => {
     try {
 
