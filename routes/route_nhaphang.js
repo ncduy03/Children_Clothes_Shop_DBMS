@@ -30,29 +30,21 @@ router.post("/nhaphang", async (req, res) => {
     }
 });
 
-router.post('/nhaphang/add', async (res, req) => {
+router.post('/nhaphang/add', async (req, res) => {
     try {
-        const id = req.body.id;
-        const Ten = req.body.ten;
-        const Time = req.body.thoi_gian;
-        const Money = req.body.tien;
+        const id = req.body.ma;
         const TrangThai = req.body.trangthai;
         const request = new sql.Request();
         request.input('id', sql.Int, id);
-        request.input('ThoiGian', sql.Int, Time);
-        request.input('Tien', sql.Int, Money);
-        request.input('Status', sql.Int, TrangThai);
+        request.input('Status', sql.NVarChar, TrangThai);
         const result = await request.query(`
-    EXEC AddProduct 
-    @name = @name, 
-    @inbound_price = @inbound, 
-    @outbound_price = @outbound, 
-    @quantity = @quantity, 
-    @product_category_id = @category
+    EXEC AddInboundOrder 
+    @manufacturer_id=@id,
+    @status=@Status
 `);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id`);
-        res.render('hanghoa', { dulieu: result1.recordset });
+        const result1 = await sql.query(`SELECT * FROM Inbound_Order`);
+        res.render('nhaphang', { dulieu: result1.recordset });
     }
     catch (error) {
         console.error(error);
