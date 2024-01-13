@@ -1,7 +1,8 @@
-CREATE OR ALTER PROCEDURE DeleteEmployee
-    @employee_id INT
+﻿CREATE OR ALTER PROCEDURE DeleteEmployee
+    @phone char(10)
 AS
 BEGIN
-    DELETE FROM Employee
-    WHERE employee_id = @employee_id;
+    UPDATE Employee
+	SET status = N'Đã nghỉ'
+	WHERE phone = @phone
 END;
