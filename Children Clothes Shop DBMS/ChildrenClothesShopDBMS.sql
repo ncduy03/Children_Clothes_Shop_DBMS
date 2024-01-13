@@ -29,7 +29,8 @@ CREATE TABLE Employee(
     name NVARCHAR(50) NOT NULL,
     address NVARCHAR(50) NOT NULL,
     phone CHAR(10) NOT NULL,
-	role NVARCHAR(20) NOT NULL
+	role NVARCHAR(20) NOT NULL,
+	status NVARCHAR(50) NOT NULL
 );
 
 
