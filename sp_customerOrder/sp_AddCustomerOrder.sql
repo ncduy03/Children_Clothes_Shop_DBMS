@@ -1,4 +1,4 @@
--- No need to add total_price and order date
+-- No need to add total_price
 CREATE OR ALTER PROCEDURE AddCustomerOrder
     @customer_id INT,
     @status NVARCHAR(50),

@@ -1,7 +1,11 @@
 CREATE OR ALTER PROCEDURE DeleteCustomer
-    @customer_id INT
+    @phone INT
 AS
 BEGIN
     DELETE FROM Customer
-    WHERE customer_id = @customer_id;
+    WHERE phone = @phone;
 END;
+
+EXEC DeleteCustomer '0123456005'
+
+SELECT * FROM Customer_Order
