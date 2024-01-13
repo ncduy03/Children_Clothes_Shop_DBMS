@@ -12,6 +12,6 @@ BEGIN
 	BEGIN
 		SELECT IO.inbound_order_id, M.manufacturer_name, IO.order_date, IO.total_price, IO.status
 		FROM Inbound_Order IO, Manufacturer M
-		WHERE IO.manufacturer_id = M.manufacturer_id AND STATUS LIKE '%' + @status + '%'
+		WHERE IO.manufacturer_id = M.manufacturer_id AND STATUS = @status
 	END;
 END;
