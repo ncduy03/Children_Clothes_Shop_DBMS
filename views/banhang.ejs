@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bán hàng</title>
-    <link href="./style.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -23,21 +23,20 @@
     <nav class="navbar navbar-expand-xxl bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/tongquan">
-                <img src="./img/navbar/logo.svg" alt="Logo" width="30" height="24"
-                    class="d-inline-block align-text-top">
+                <img src="/img/navbar/logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 My Store
             </a>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/tongquan">
-                            <img src="./img/navbar/tongquan.svg">
+                            <img src="/img/navbar/tongquan.svg">
                             Tổng quan
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/hanghoa">
-                            <img src="./img/navbar/box.svg">
+                            <img src="/img/navbar/box.svg">
                             Hàng hóa
                         </a>
                     </li>
@@ -46,19 +45,19 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <img src="./img/navbar/giaodich.svg">
+                            <img src="/img/navbar/giaodich.svg">
                             Giao dịch
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="/nhaphang">
-                                    <img src="./img/navbar/thietlapgia.svg">
+                                    <img src="/img/navbar/thietlapgia.svg">
                                     Nhập hàng
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/banhang">
-                                    <img src="./img/navbar/kiemkho.svg">
+                                    <img src="/img/navbar/kiemkho.svg">
                                     Bán hàng
                                 </a>
                             </li>
@@ -66,19 +65,19 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/doitac">
-                            <img src="./img/navbar/doitac.svg">
+                            <img src="/img/navbar/doitac.svg">
                             Đối tác
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/nhanvien">
-                            <img src="./img/navbar/nhanvien.svg">
+                            <img src="/img/navbar/nhanvien.svg">
                             Nhân viên
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/khachhang">
-                            <img src="./img/navbar/khachhang.svg">
+                            <img src="/img/navbar/khachhang.svg">
                             Khách hàng
                         </a>
                     </li>
@@ -89,13 +88,23 @@
         </div>
     </nav>
 
-    <p class="fs-2 mt-3 ms-4">Bán hàng</p>
+    <!-- <p class="fs-2 mt-3 ms-4">Bán hàng</p>
 
     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Thêm đơn hàng
-    </button>
+    </button> -->
 
-
+    <div class="row">
+        <div class="col-6 text-start">
+            <p class="fs-2 mt-3 ms-4">Bán hàng</p>
+        </div>
+        <div class="col-6 text-end">
+            <button type="button" class="btn btn-outline-secondary mt-4 me-4" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Thêm đơn hàng
+            </button>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -137,6 +146,105 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm hàng hóa</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- <div class="form-group">
+                            <label for="usr">Số điện thoại:</label>
+                            <input type="text" class="form-control" id="usr">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="usr">Mã hàng hóa:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Số lượng:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa hàng hóa</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- <div class="form-group">
+                            <label for="usr">Số điện thoại:</label>
+                            <input type="text" class="form-control" id="usr">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="usr">Mã hàng hóa:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chi tiết đơn hàng</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="usr">Mã hóa đơn: </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">SĐT khách hàng: </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">Thời gian: </label>
+                    </div>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã hàng hóa</th>
+                                <th scope="col">Tên hàng hóa</th>
+                                <th scope="col">Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#addModal">Thêm</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#removeModal">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="grid-container">
         <div class="grid-item">
@@ -148,7 +256,60 @@
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" placeholder="Time end" name="input_data2">
                 </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checked1" id="checked1" value="true"
+                        onchange="sendData('checked1')">
+                    <label class="form-check-label" for="checked1">
+                        Đang xử lý
+                    </label>
+                </div>
+
+                <script>
+                    function sendData(checkboxName) {
+                        // Lấy giá trị của checkbox
+                        var checkbox = document.getElementById(checkboxName);
+                        var isChecked = checkbox.checked;
+
+                        // Nếu checkbox được chọn, gửi giá trị 1 đến máy chủ
+                        if (isChecked) {
+                            // Thực hiện yêu cầu AJAX hoặc sử dụng fetch API để gửi dữ liệu đến máy chủ
+                            // Ở đây tôi sử dụng fetch API làm ví dụ
+                            fetch('/banhang/check1', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ [checkboxName]: true }),
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Success:', data);
+                                })
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                });
+                        }
+                    }
+                </script>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checked2" id="checked2" value="true"
+                        onchange="sendData('checked2')">
+                    <label class="form-check-label" for="checked2">
+                        Đang giao
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checked3" id="checked3" value="true"
+                        onchange="sendData('checked3')">
+                    <label class="form-check-label" for="checked3">
+                        Đã giao
+                    </label>
+                </div>
+
+
                 <button class="btn btn-outline-dark" type="submit">Find</button>
+            </form>
         </div>
         <div class="grid-item">
             <div class="container">
@@ -160,6 +321,7 @@
                             <th scope="col">Thời gian</th>
                             <th scope="col">Tổng số tiền</th>
                             <th scope="col">Trạng thái</th>
+                            <th scope="col">Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,6 +341,9 @@
                                 </td>
                                 <td>
                                     <%= dulieu[i].status %>
+                                </td>
+                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center">
+                                    <img src="/img/navbar/pencil.svg">
                                 </td>
                             </tr>
                             <% } %>

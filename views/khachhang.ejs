@@ -89,13 +89,18 @@
     </nav>
 
 
-    <p class="fs-2 mt-3 ms-4">Khách hàng</p>
-
-
-    <div class="btn-group">
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Thêm khách hàng
-        </button>
+    <div class="row">
+        <div class="col-6 text-start">
+            <p class="fs-2 mt-3 ms-4">Khách hàng</p>
+        </div>
+        <div class="col-6 text-end">
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-secondary mt-4 me-4" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Thêm khách hàng
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -146,13 +151,7 @@
                     <button class="btn btn-outline-dark" type="submit">Find</button>
                 </div>
             </form>
-            <form action="/khachhang/xoa" method="post">
-                <p class="fs-5 ms-2">Xóa khách hàng</p>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="SĐT" name="xoa">
-                    <button class="btn btn-outline-dark" type="submit">Xóa</button>
-                </div>
-            </form>
+
         </div>
         <div class="grid-item">
             <div class="container">
