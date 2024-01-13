@@ -25,7 +25,30 @@ router.post("/banhang", async (req, res) => {
     res.render('banhang', { dulieu: result.recordset });
 
 });
-
+router.post('/nhaphang/add', async (req, res) => {
+    try {
+        const id = req.body.ma;
+        const TrangThai = req.body.trangthai;
+        const Nhanvien = req.body.ma_nhanvien;
+        const request = new sql.Request();
+        request.input('ma', sql.Int, id);
+        request.input('Status', sql.NVarChar, TrangThai);
+        request.input('nhanvien', sql.Int, Nhanvien);
+        const result = await request.query(`
+    EXEC AddCustomerOrder 
+    @customer_id=@id,
+    @status=@Status,
+    @employee_id=@nhanvien
+`);
+        if (result) console.log("Trueeee");
+        const result1 = await sql.query(`SELECT * FROM Inbound_Order`);
+        res.render('nhaphang', { dulieu: result1.recordset });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 export default router;
 
 
