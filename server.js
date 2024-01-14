@@ -78,6 +78,7 @@ app.get("/nhaphang", async (req, res) => {
     } else {
         res.render('login');
     }
+
 })
 app.get("/doitac", async (req, res) => {
     if (check) {
@@ -97,12 +98,12 @@ app.get("/nhanvien", async (req, res) => {
 })
 app.get("/banhang", async (req, res) => {
     if (check) {
-
         const result = await sql.query(`SELECT TOP 100 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { dulieu: result.recordset });
     } else {
         res.render('login');
     }
+
 })
 
 
