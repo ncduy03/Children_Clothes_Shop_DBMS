@@ -163,7 +163,7 @@
             <form action="/nhanvien/xoa" method="post">
                 <p class="fs-5 ms-2">Xóa nhân viên</p>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Mã nhân viên" name="xoa">
+                    <input type="text" class="form-control" placeholder="Số điện thoại" name="xoa">
                     <button class="btn btn-outline-dark" type="submit">Xóa</button>
                 </div>
             </form>
@@ -178,6 +178,7 @@
                             <th scope="col">Vị trí</th>
                             <th scope="col">Địa chỉ</th>
                             <th scope="col">Số điện thoại</th>
+                            <th scope="col">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,6 +198,9 @@
                                 </td>
                                 <td>
                                     <%= dulieu[i].phone %>
+                                </td>
+                                <td>
+                                    <%= dulieu[i].status %>
                                 </td>
                             </tr>
                             <% } %>

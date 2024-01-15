@@ -98,7 +98,7 @@ app.get("/nhanvien", async (req, res) => {
 })
 app.get("/banhang", async (req, res) => {
     if (check) {
-        const result = await sql.query(`SELECT TOP 100 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { dulieu: result.recordset });
     } else {
         res.render('login');

@@ -25,7 +25,7 @@ router.post("/nhaphang", async (req, res) => {
         res.render('nhaphang', { dulieu: result.recordset });
     }
     else {
-        const result = await request.query(`SELECT * FROM Inbound_Order`);
+        const result = await request.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
         res.render('nhaphang', { dulieu: result.recordset });
     }
 });
@@ -43,7 +43,7 @@ router.post('/nhaphang/add', async (req, res) => {
     @status=@Status
 `);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT * FROM Inbound_Order`);
+        const result1 = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
         res.render('nhaphang', { dulieu: result1.recordset });
     }
     catch (error) {
