@@ -25,13 +25,9 @@ router.post('/banhang/add', async (req, res) => {
         request.input('trangthai', sql.NVarChar, TrangThai);
         request.input('nhanvien', sql.Int, Nhanvien);
         const result = await request.query(`
-    EXEC AddCustomerOrder 
-    @customer_id=@ma,
-    @status=@trangthai,
-    @employee_id=@nhanvien
-`);
+    EXEC AddCustomerOrder @ma, @trangthai, @nhanvien`);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT TOP 10 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result1 = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id DESC`);
         res.render('banhang', { dulieu: result1.recordset });
     }
     catch (error) {
@@ -48,13 +44,11 @@ router.post('/banhang', async (req, res) => {
     const request = new sql.Request();
     const check1 = req.body.checked1;
     const check2 = req.body.checked2;
-    const check3 = req.body.checked3;
     const inputData1 = req.body.input_data1;
     const inputData2 = req.body.input_data2;
     var Dk1 = null;
-    if (check1) Dk1 = 'Đang xử lí';
-    if (check2) Dk1 = 'Đang giao';
-    if (check3) Dk1 = 'Đã giao';
+    if (check1) Dk1 = 'Đã thanh toán';
+    if (check2) Dk1 = 'Đã hủy';
     request.input('dk1', sql.NVarChar, Dk1);
     request.input('InputData1', sql.NVarChar, inputData1);
     request.input('InputData2', sql.NVarChar, inputData2);

@@ -58,9 +58,8 @@ router.post("/nhanvien/add", async (req, res) => {
 router.post("/nhanvien/xoa", async (req, res) => {
     const Xoa = req.body.xoa;
     const request = new sql.Request();
-    request.input('employee_id', sql.NVarChar, Xoa);
-    const result = await request.query(`EXEC DeleteEmployee @employee_id = @employee_id
-    `);
+    request.input('phone', sql.NVarChar, Xoa);
+    const result = await request.query(`EXEC DeleteEmployee @phone = @phone`);
     if (result) console.log("Trueeee");
     const result1 = await sql.query(`SELECT * FROM Employee`);
     res.render('nhanvien', { dulieu: result1.recordset });

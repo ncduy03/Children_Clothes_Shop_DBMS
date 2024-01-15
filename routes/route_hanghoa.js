@@ -68,7 +68,7 @@ router.post('/hanghoa/them', async (req, res) => {
     @product_category_id = @category
 `);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id`);
+        const result1 = await sql.query(`SELECT TOP 100 p.product_id, p.name, p.inbound_price, p.outbound_price, p.quantity, pc.category_name FROM Product p JOIN Product_category pc ON p.product_category_id = pc.product_category_id ORDER BY p.product_id DESC`);
         res.render('hanghoa', { dulieu: result1.recordset });
     }
     catch (error) {
