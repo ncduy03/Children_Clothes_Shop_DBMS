@@ -1,7 +1,6 @@
-﻿-- No need to add total_price
+-- No need to add total_price
 CREATE OR ALTER PROCEDURE AddCustomerOrder
     @customer_id INT,
-    @status NVARCHAR(50),
     @employee_id INT
 AS
 BEGIN
