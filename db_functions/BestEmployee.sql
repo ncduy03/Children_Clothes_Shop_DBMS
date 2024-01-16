@@ -6,7 +6,7 @@ RETURNS @table TABLE(
 )
 AS 
 BEGIN
-    SELECT @end_time = DATEADD(DAY, 1, @end_time)
+    SET @end_time = DATEADD(DAY, 1, @end_time)
     IF @start_time IS NOT NULL AND @end_time IS NOT NULL
     BEGIN
         INSERT INTO @table
