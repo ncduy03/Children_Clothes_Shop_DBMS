@@ -10,7 +10,7 @@ BEGIN
     IF @start_time IS NOT NULL AND @end_time IS NOT NULL
     BEGIN
         INSERT INTO @table
-        SELECT E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
+        SELECT TOP 5 E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
         FROM Employee E
         JOIN Customer_Order CO ON E.employee_id = CO.employee_id
         WHERE CO.order_date BETWEEN @start_time AND @end_time
@@ -21,7 +21,7 @@ BEGIN
     ELSE IF @start_time IS NOT NULL AND @end_time IS NULL
     BEGIN
         INSERT INTO @table
-        SELECT E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
+        SELECT TOP 5 E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
         FROM Employee E
         JOIN Customer_Order CO ON E.employee_id = CO.employee_id
         WHERE CO.order_date >= @start_time
@@ -32,7 +32,7 @@ BEGIN
     ELSE IF @start_time IS NULL AND @end_time IS NOT NULL
     BEGIN
         INSERT INTO @table
-        SELECT E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
+        SELECT TOP 5 E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
         FROM Employee E
         JOIN Customer_Order CO ON E.employee_id = CO.employee_id
         WHERE CO.order_date <= @end_time
@@ -43,7 +43,7 @@ BEGIN
     ELSE IF @start_time IS NULL AND @end_time IS NULL
     BEGIN
         INSERT INTO @table
-        SELECT E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
+        SELECT TOP 5 E.employee_id, E.name, CAST(SUM(CO.total_price) AS NVARCHAR(50)) AS S
         FROM Employee E
         JOIN Customer_Order CO ON E.employee_id = CO.employee_id
         WHERE E.status = N'Đang làm'
