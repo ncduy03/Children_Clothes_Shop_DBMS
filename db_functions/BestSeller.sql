@@ -6,6 +6,7 @@ RETURNS @table TABLE(
 )
 AS
 BEGIN
+	SET @end_date = DATEADD(DAY, 1, @end_date)
 	IF @start_date IS NOT NULL AND @end_date IS NOT NULL
 	BEGIN
 		INSERT INTO @table
