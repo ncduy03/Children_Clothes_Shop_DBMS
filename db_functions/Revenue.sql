@@ -1,7 +1,8 @@
 CREATE OR ALTER FUNCTION Revenue(@start_date DATE, @end_date DATE)
-RETURNS BIGINT
+RETURNS NVARCHAR(50)
 AS
 BEGIN
+	SET @end_date = DATEADD(DAY, 1, @end_date)
 	DECLARE @revenue BIGINT
 	IF @start_date IS NOT NULL AND @end_date IS NOT NULL
 	BEGIN
@@ -19,5 +20,5 @@ BEGIN
 	BEGIN
 		SELECT @revenue = SUM(total_price) FROM Customer_Order
 	END;
-	RETURN @revenue
+	RETURN FORMAT(@revenue, 'N0')
 END;
