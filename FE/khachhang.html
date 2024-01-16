@@ -120,6 +120,36 @@
         </div>
     </div>
 
+        <!-- Modal to update-->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="myModalLabel">Sửa thông tin khách hàng</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="usr">Mã khách hàng: 123456</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Họ và tên:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">SĐT khách hàng:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm khách hàng</p>
@@ -144,6 +174,8 @@
                         <th scope="col">Mã khách hàng</th>
                         <th scope="col">Họ và tên</th>
                         <th scope="col">Số điện thoại</th>
+                        <th scope="col">Sửa</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -151,16 +183,22 @@
                         <th scope="row">1</th>
                         <td>Nguyễn Công Duy</td>
                         <td>0909106888</td>
+                        <td data-bs-toggle="modal" data-bs-target="#myModal" class="text-center"><img
+                            src="./img/navbar/pencil.svg"></td>
                     </tr>
                     <tr>
                         <th scope="row">2</th>
                         <td>Nguyễn Công Duy</td>
                         <td>0909106888</td>
+                        <td data-bs-toggle="modal" data-bs-target="#myModal" class="text-center"><img
+                            src="./img/navbar/pencil.svg"></td>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
                         <td>Nguyễn Công Duy</td>
                         <td>0909106888</td>
+                        <td data-bs-toggle="modal" data-bs-target="#myModal" class="text-center"><img
+                            src="./img/navbar/pencil.svg"></td>
                     </tr>
                 </tbody>
             </table>
