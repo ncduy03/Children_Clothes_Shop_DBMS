@@ -1,4 +1,4 @@
-﻿CREATE OR ALTER FUNCTION BestEmployee(@start_time DATE = NULL, @end_time DATE = NULL)
+CREATE OR ALTER FUNCTION BestEmployee(@start_time DATE = NULL, @end_time DATE = NULL)
 RETURNS @table TABLE(
     employee_id INT,
     name NVARCHAR(50),
