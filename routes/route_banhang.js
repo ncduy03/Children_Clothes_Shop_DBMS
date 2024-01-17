@@ -77,9 +77,8 @@ router.post('/banhang/chitiet', async (req, res) => {
     const receivedParam = req.body.customerOrderId;
     const request = new sql.Request();
     request.input('param', sql.Int, receivedParam);    // Perform necessary database queries or other operations
-
     // Assuming you have some data to send back
-    const result = await request.query(`SELECT p.name as pname, cod.product_id, cod.quantity, co.customer_order_id, c.name as cname, c.phone, co.order_date FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id 
+    const result = await request.query(`SELECT p.name as pname, cod.product_id, cod.quantity, co.customer_order_id, c.name as cname, c.phone, co.order_date, cod.price FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id 
                                                                                                             JOIN Customer_Order_Detail cod ON co.customer_order_id = cod.customer_order_id 
                                                                                                             JOIN Product p ON cod.product_id = p.product_id WHERE cod.customer_order_id = @param`);
     //const result1 = await sql.query(`SELECT 1`)
@@ -107,6 +106,20 @@ router.post('/banhang/chitiet/add', async (req, res) => {
         const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     }
+})
+
+router.post('/banhang/chitiet/xoa', async (req, res) => {
+    const receivedParam = req.body.customerOrderId;
+    const cus_detail_id = req.body.cusDetailId;
+    const sqlQuery = `DELETE FROM Customer_Order_Detail WHERE customer_order_id = ${receivedParam} AND product_id = ${cus_detail_id}`;
+
+    const result = await sql.query(sqlQuery);
+    if (result) {
+        const result1 = await sql.query(`SELECT 1`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
+    }
+
 })
 export default router;
 

@@ -9,7 +9,7 @@ import doitac from "./routes/route_doitac.js";
 import nhaphang from "./routes/route_nhaphang.js";
 import tongquan from "./routes/route_tongquan.js";
 const app = express();
-const port = 3000;
+const port = 4000;
 var check = false;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("views"));
@@ -105,7 +105,8 @@ app.get("/nhanvien", async (req, res) => {
 app.get("/banhang", async (req, res) => {
     if (check) {
         const result1 = await sql.query(`SELECT 1`);
-        const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        console.log(result);
         res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     } else {
         res.render('login');

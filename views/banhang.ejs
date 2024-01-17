@@ -188,20 +188,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <!-- <div class="form-group">
-                            <label for="usr">Số điện thoại:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div> -->
-                        <div class="form-group">
-                            <label for="usr">Mã hàng hóa:</label>
-                            <input type="text" class="form-control">
+                    <form action="/banhang/chitiet/xoa" method="post">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Mã hàng hóa</label>
+                                <input type="number" name="cus_detail_id1" id="cus_detail_id1" class="form-control">
+                            </div>
                         </div>
-                    </form>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                    <div class="mb-3">
+                        <input type="submit" name="submit_button" class="btn btn-primary" value="Save">
+                    </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -225,6 +226,7 @@
                                 <th scope="col">Mã hàng hóa</th>
                                 <th scope="col">Tên hàng hóa</th>
                                 <th scope="col">Số lượng</th>
+                                <th scope="col">Số tiền</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -301,7 +303,7 @@
                                     <%= dulieu[i].order_date %>
                                 </td>
                                 <td>
-                                    <%= dulieu[i].total_price %>
+                                    <%= dulieu[i].TP %>
                                 </td>
                                 <td>
                                     <%= dulieu[i].status %>
@@ -364,7 +366,7 @@
                         var modalBodyContent = '';
 
                         // Tạo nội dung cho thẻ p từ dulieu2
-                        modalBodyContent += 'Mã hóa đơn: ' + dulieu2[0].customer_order_id + ', Tên khách hàng: ' + dulieu2[0].cname + ', Số điện thoại: ' + dulieu2[0].phone + '<br>';
+                        modalBodyContent += 'Mã hóa đơn: ' + dulieu2[0].customer_order_id + '<br>' + 'Tên khách hàng: ' + dulieu2[0].cname + '<br>' + ' Số điện thoại: ' + dulieu2[0].phone + '<br>' + 'Thời gian: ' + dulieu2[0].order_date + '<br>';
 
                         // Đặt nội dung vào thẻ p
                         $('#modal_body').html(modalBodyContent);
@@ -377,6 +379,7 @@
                                 '<td>' + dulieu2[i].product_id + '</td>' +
                                 '<td>' + dulieu2[i].pname + '</td>' +
                                 '<td>' + dulieu2[i].quantity + '</td>' +
+                                '<td>' + dulieu2[i].price + '</td>' +
                                 '</tr>';
 
                             tableBody.append(row);
@@ -405,6 +408,31 @@
                         customerOrderId: customerOrderId,
                         cusDetailId: cusDetailId,
                         cusDetailStatus: cusDetailStatus
+                    },
+                    success: function (data) {
+                        // Xử lý dữ liệu nhận được từ server nếu cần
+                        location.reload();
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+            $('#removeModal form').submit(function (e) {
+                e.preventDefault();
+
+                // Lấy giá trị từ các trường nhập liệu
+                var cusDetailId = $('#cus_detail_id1').val();
+
+                // Gửi AJAX request lên server cùng với customerOrderId
+                $.ajax({
+                    type: 'POST',
+                    url: '/banhang/chitiet/xoa',
+                    data: {
+                        customerOrderId: customerOrderId,
+                        cusDetailId: cusDetailId,
                     },
                     success: function (data) {
                         // Xử lý dữ liệu nhận được từ server nếu cần

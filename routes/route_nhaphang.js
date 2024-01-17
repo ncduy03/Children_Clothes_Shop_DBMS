@@ -51,4 +51,22 @@ router.post('/nhaphang/add', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+router.post('/nhaphang/chitiet', async (req, res) => {
+    const receivedParam = req.body.inboundOrderId;
+    const request = new sql.Request();
+    console.log(receivedParam);
+    request.input('param', sql.Int, receivedParam);    // Perform necessary database queries or other operations
+    // Assuming you have some data to send back
+    const result = await request.query(`SELECT p.name as pname, iod.product_id, iod.quantity, io.inbound_order_id, m.manufacturer_name as mname, m.phone, io.order_date, p.inbound_price FROM Manufacturer m JOIN Inbound_Order io ON m.manufacturer_id = io.manufacturer_id 
+                                        JOIN Inbound_Order_Detail iod ON io.inbound_order_id = iod.inbound_order_id 
+                                        JOIN Product p ON iod.product_id = p.product_id WHERE iod.inbound_order_id = @param`);
+    //const result1 = await sql.query(`SELECT 1`)
+
+    // Render the response using EJS
+    res.json({ dulieu2: result.recordset });
+});
+
+
+
 export default router;
