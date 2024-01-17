@@ -150,28 +150,29 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <!-- <div class="form-group">
-                            <label for="usr">Số điện thoại:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div> -->
-                        <div class="form-group">
-                            <label for="usr">Mã hàng hóa:</label>
-                            <input type="text" class="form-control">
+                    <form action="/nhaphang/chitiet/add" method="post">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Mã hàng hóa</label>
+                                <input type="number" name="in_detail_id" id="in_detail_id" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="usr">Số lượng:</label>
-                            <input type="text" class="form-control">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Số lượng</label>
+                                <input type="number" name="in_detail_status" id="in_detail_status" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="mb-3">
+                                <input type="submit" name="submit_button" class="btn btn-primary" value="Save">
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -181,20 +182,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <!-- <div class="form-group">
-                            <label for="usr">Số điện thoại:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div> -->
-                        <div class="form-group">
-                            <label for="usr">Mã hàng hóa:</label>
-                            <input type="text" class="form-control">
+                    <form action="/nhaphang/chitiet/xoa" method="post">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Mã hàng hóa</label>
+                                <input type="number" name="in_detail_id1" id="in_detail_id1" class="form-control">
+                            </div>
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                    <div class="mb-3">
+                        <input type="submit" name="submit_button" class="btn btn-primary" value="Save">
+                    </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -274,7 +275,7 @@
                                     <%= dulieu[i].order_date %>
                                 </td>
                                 <td>
-                                    <%= dulieu[i].total_price %>
+                                    <%= dulieu[i].TP %>
                                 </td>
                                 <td>
                                     <%= dulieu[i].status %>
@@ -338,57 +339,57 @@
                     }
                 });
             });
-        })
-        $('#addModal form').submit(function (e) {
-            e.preventDefault();
+            $('#addModal form').submit(function (e) {
+                e.preventDefault();
 
-            // Lấy giá trị từ các trường nhập liệu
-            var cusDetailId = $('#cus_detail_id').val();
-            var cusDetailStatus = $('#cus_detail_status').val();
+                // Lấy giá trị từ các trường nhập liệu
+                var inDetailId = $('#in_detail_id').val();
+                var inDetailStatus = $('#in_detail_status').val();
 
-            // Gửi AJAX request lên server cùng với customerOrderId
-            $.ajax({
-                type: 'POST',
-                url: '/banhang/chitiet/add',
-                data: {
-                    customerOrderId: customerOrderId,
-                    cusDetailId: cusDetailId,
-                    cusDetailStatus: cusDetailStatus
-                },
-                success: function (data) {
-                    // Xử lý dữ liệu nhận được từ server nếu cần
-                    location.reload();
+                // Gửi AJAX request lên server cùng với customerOrderId
+                $.ajax({
+                    type: 'POST',
+                    url: '/nhaphang/chitiet/add',
+                    data: {
+                        inboundOrderId: inboundOrderId,
+                        inDetailId: inDetailId,
+                        inDetailStatus: inDetailStatus
+                    },
+                    success: function (data) {
+                        // Xử lý dữ liệu nhận được từ server nếu cần
+                        location.reload();
 
 
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
-        });
-        $('#removeModal form').submit(function (e) {
-            e.preventDefault();
+            $('#removeModal form').submit(function (e) {
+                e.preventDefault();
 
-            // Lấy giá trị từ các trường nhập liệu
-            var cusDetailId = $('#cus_detail_id1').val();
+                // Lấy giá trị từ các trường nhập liệu
+                var inDetailId = $('#in_detail_id1').val();
 
-            // Gửi AJAX request lên server cùng với customerOrderId
-            $.ajax({
-                type: 'POST',
-                url: '/banhang/chitiet/xoa',
-                data: {
-                    customerOrderId: customerOrderId,
-                    cusDetailId: cusDetailId,
-                },
-                success: function (data) {
-                    // Xử lý dữ liệu nhận được từ server nếu cần
-                    location.reload();
+                // Gửi AJAX request lên server cùng với customerOrderId
+                $.ajax({
+                    type: 'POST',
+                    url: '/nhaphang/chitiet/xoa',
+                    data: {
+                        inboundOrderId: inboundOrderId,
+                        inDetailId: inDetailId
+                    },
+                    success: function (data) {
+                        // Xử lý dữ liệu nhận được từ server nếu cần
+                        location.reload();
 
 
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         });
 

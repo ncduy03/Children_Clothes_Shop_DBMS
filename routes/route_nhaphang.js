@@ -25,7 +25,7 @@ router.post("/nhaphang", async (req, res) => {
         res.render('nhaphang', { dulieu: result.recordset });
     }
     else {
-        const result = await request.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        const result = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
         res.render('nhaphang', { dulieu: result.recordset });
     }
 });
@@ -43,8 +43,8 @@ router.post('/nhaphang/add', async (req, res) => {
     @status=@Status
 `);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
-        res.render('nhaphang', { dulieu: result1.recordset });
+        const result1 = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('test', { dulieu: result1.recordset });
     }
     catch (error) {
         console.error(error);
@@ -55,7 +55,6 @@ router.post('/nhaphang/add', async (req, res) => {
 router.post('/nhaphang/chitiet', async (req, res) => {
     const receivedParam = req.body.inboundOrderId;
     const request = new sql.Request();
-    console.log(receivedParam);
     request.input('param', sql.Int, receivedParam);    // Perform necessary database queries or other operations
     // Assuming you have some data to send back
     const result = await request.query(`SELECT p.name as pname, iod.product_id, iod.quantity, io.inbound_order_id, m.manufacturer_name as mname, m.phone, io.order_date, p.inbound_price FROM Manufacturer m JOIN Inbound_Order io ON m.manufacturer_id = io.manufacturer_id 
@@ -67,6 +66,34 @@ router.post('/nhaphang/chitiet', async (req, res) => {
     res.json({ dulieu2: result.recordset });
 });
 
+router.post('/nhaphang/chitiet/add', async (req, res) => {
+    const receivedParam = req.body.inboundOrderId;
+    const in_detail_id = req.body.inDetailId;
+    const in_detail_status = req.body.inDetailStatus;
+    console.log(receivedParam);
+    console.log(in_detail_id);
+    console.log(in_detail_status);
+    const sqlQuery = `
+    INSERT INTO Inbound_Order_Detail(inbound_order_id, product_id, quantity) 
+    VALUES (${receivedParam}, ${in_detail_id}, ${in_detail_status})`;
+    const result = await sql.query(sqlQuery);
+    if (result) {
+        const result1 = await sql.query(`SELECT 1`);
+        const result = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('nhaphang', { inboundOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
+    }
+})
+router.post('/nhaphang/chitiet/xoa', async (req, res) => {
+    const receivedParam = req.body.inboundOrderId;
+    const in_detail_id = req.body.inDetailId;
+    const sqlQuery = `DELETE FROM Inbound_Order_Detail WHERE inbound_order_id = ${receivedParam} AND product_id = ${in_detail_id}`;
 
+    const result = await sql.query(sqlQuery);
+    if (result) {
+        const result1 = await sql.query(`SELECT 1`);
+        const result = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('nhaphang', { inboundOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
+    }
+})
 
 export default router;

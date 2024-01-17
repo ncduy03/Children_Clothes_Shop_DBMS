@@ -27,7 +27,7 @@ router.post('/banhang/add', async (req, res) => {
         const result = await request.query(`
     EXEC AddCustomerOrder @ma, @trangthai, @nhanvien`);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id DESC`);
+        const result1 = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id DESC`);
         res.render('banhang', { dulieu: result1.recordset });
     }
     catch (error) {
@@ -103,7 +103,7 @@ router.post('/banhang/chitiet/add', async (req, res) => {
     const result = await sql.query(sqlQuery);
     if (result) {
         const result1 = await sql.query(`SELECT 1`);
-        const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     }
 })

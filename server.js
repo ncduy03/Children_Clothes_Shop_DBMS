@@ -79,8 +79,8 @@ app.get('/khachhang', async (req, res) => {
 })
 app.get("/nhaphang", async (req, res) => {
     if (check) {
-        const result = await sql.query(`SELECT m.manufacturer_name, io.* FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
-        res.render('nhaphang', { dulieu: result.recordset });
+        const result = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('nhaphang', { inboundOrderId: 0, dulieu: result.recordset });
     } else {
         res.render('login');
     }
@@ -105,7 +105,7 @@ app.get("/nhanvien", async (req, res) => {
 app.get("/banhang", async (req, res) => {
     if (check) {
         const result1 = await sql.query(`SELECT 1`);
-        const result = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         console.log(result);
         res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     } else {
