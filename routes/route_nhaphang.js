@@ -43,8 +43,8 @@ router.post('/nhaphang/add', async (req, res) => {
     @status=@Status
 `);
         if (result) console.log("Trueeee");
-        const result1 = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
-        res.render('test', { dulieu: result1.recordset });
+        const result1 = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id ORDER BY inbound_order_id DESC`);
+        res.render('nhaphang', { dulieu: result1.recordset });
     }
     catch (error) {
         console.error(error);
@@ -57,7 +57,7 @@ router.post('/nhaphang/chitiet', async (req, res) => {
     const request = new sql.Request();
     request.input('param', sql.Int, receivedParam);    // Perform necessary database queries or other operations
     // Assuming you have some data to send back
-    const result = await request.query(`SELECT p.name as pname, iod.product_id, iod.quantity, io.inbound_order_id, m.manufacturer_name as mname, m.phone, io.order_date, p.inbound_price FROM Manufacturer m JOIN Inbound_Order io ON m.manufacturer_id = io.manufacturer_id 
+    const result = await request.query(`SELECT p.name as pname, iod.product_id, iod.quantity, io.inbound_order_id, m.manufacturer_name as mname, m.phone, io.order_date, FORMAT(iod.price,'N0') as TP FROM Manufacturer m JOIN Inbound_Order io ON m.manufacturer_id = io.manufacturer_id 
                                         JOIN Inbound_Order_Detail iod ON io.inbound_order_id = iod.inbound_order_id 
                                         JOIN Product p ON iod.product_id = p.product_id WHERE iod.inbound_order_id = @param`);
     //const result1 = await sql.query(`SELECT 1`)
@@ -95,5 +95,36 @@ router.post('/nhaphang/chitiet/xoa', async (req, res) => {
         res.render('nhaphang', { inboundOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     }
 })
+router.post('/nhaphang/update', async (req, res) => {
+    try {
+        const inbound_order_id = req.body.inbound_order_idInput;
+        const status = req.body.status;
+        const request = new sql.Request();
+        request.input('inbound_order_id', sql.Int, inbound_order_id);
+        request.input('status', sql.NVarChar, status);
+        console.log(inbound_order_id);
+        console.log(status);
+        const result = await request.query(` EXEC UpdateInboundOrder @inbound_order_id, @status`);
 
+        if (result) console.log("Product details updated successfully");
+        const result1 = await sql.query(`SELECT m.manufacturer_name, io.inbound_order_id, FORMAT(io.total_price, 'N0') AS TP, io.order_date, io.status FROM Inbound_Order io JOIN Manufacturer m ON m.manufacturer_id = io.manufacturer_id`);
+        res.render('nhaphang', { dulieu: result1.recordset });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/nhaphang/chinhsua/info', async (req, res) => {
+    try {
+        const inbound_order_id = req.body.inbound_order_id;
+        const request = new sql.Request();
+        request.input('inbound_order_id', sql.NVarChar, inbound_order_id);
+        const result = await request.query(`SELECT * FROM Inbound_Order WHERE inbound_order_id = @inbound_order_id`);
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 export default router;
