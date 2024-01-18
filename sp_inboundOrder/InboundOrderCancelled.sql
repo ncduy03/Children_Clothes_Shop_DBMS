@@ -12,6 +12,3 @@ BEGIN
 	END;
 END;
 
-UPDATE Inbound_Order 
-SET total_price = 0
-WHERE status = N'Đã hủy'
