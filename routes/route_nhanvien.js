@@ -51,7 +51,7 @@ router.post("/nhanvien/add", async (req, res) => {
     @role = @role
 `);
     if (result) console.log("Trueeee");
-    const result1 = await sql.query(`SELECT * FROM Employee`);
+    const result1 = await sql.query(`SELECT * FROM Employee ORDER BY employee_id DESC`);
     res.render('nhanvien', { dulieu: result1.recordset });
 })
 
@@ -61,7 +61,53 @@ router.post("/nhanvien/xoa", async (req, res) => {
     request.input('phone', sql.NVarChar, Xoa);
     const result = await request.query(`EXEC DeleteEmployee @phone = @phone`);
     if (result) console.log("Trueeee");
-    const result1 = await sql.query(`SELECT * FROM Employee`);
+    const result1 = await sql.query(`SELECT * FROM Employee WHERE phone = ${Xoa}`);
     res.render('nhanvien', { dulieu: result1.recordset });
 })
+router.post('/nhanvien/chinhsua', async (req, res) => {
+    try {
+        const employeeId = req.body.employeeId;
+        const newName = req.body.newName;
+        const newPhone = req.body.newPhone;
+        const newAddress = req.body.newAddress;
+        const newRole = req.body.newRole;
+
+        const request = new sql.Request();
+        request.input('employee_id', sql.NVarChar, employeeId);
+        request.input('new_name', sql.NVarChar, newName);
+        request.input('new_phone', sql.NVarChar, newPhone);
+        request.input('new_address', sql.NVarChar, newAddress);
+        request.input('new_role', sql.NVarChar, newRole);
+
+        const result = await request.query(
+            `EXEC UpdateEmployee 
+            @employee_id = @employee_id,
+            @name = @new_name,
+            @phone = @new_phone,
+            @address = @new_address,
+            @role = @new_role`
+        );
+
+        if (result) console.log("Employee details updated successfully");
+        const updatedResult = await sql.query(`SELECT * FROM Employee`);
+        res.render('nhanvien', { dulieu: updatedResult.recordset });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Route xử lý lấy thông tin nhân viên để hiển thị trong modal
+router.post('/nhanvien/chinhsua/info', async (req, res) => {
+    try {
+        const employeeId = req.body.employeeId;
+        const request = new sql.Request();
+        request.input('employee_id', sql.NVarChar, employeeId);
+        const result = await request.query(`SELECT * FROM Employee WHERE employee_id = @employee_id`);
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 export default router;
