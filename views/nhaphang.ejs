@@ -236,6 +236,38 @@
         </div>
     </div>
 
+    <div class="modal fade" id="updateStatus" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="myModalLabel">Thay đổi trạng thái</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/nhaphang/update" method="post" id="updateForm">
+                        <div class="form-group">
+                            <label for="inbound_order_id">Mã đơn hàng:</label>
+                            <span id="inbound_order_id"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newName">Trạng thái:</label>
+                                <input type="text" name="status" id="status" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="hidden" name="inbound_order_idInput" id="inbound_order_idInput" value="">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="updateButton"
+                        data-bs-dismiss="modal">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm đơn hàng</p>
@@ -260,6 +292,8 @@
                             <th scope="col">Tổng số tiền</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Chi tiết</th>
+                            <th scope="col">Sửa trạng thái</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -280,7 +314,11 @@
                                 <td>
                                     <%= dulieu[i].status %>
                                 </td>
-                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center"
+                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center-click"
+                                    data-inbound-order-id="<%= dulieu[i].inbound_order_id %>">
+                                    <img src="/img/navbar/pencil.svg">
+                                </td>
+                                <td data-bs-toggle="modal" data-bs-target="#updateStatus" class="text-center"
                                     data-inbound-order-id="<%= dulieu[i].inbound_order_id %>">
                                     <img src="/img/navbar/pencil.svg">
                                 </td>
@@ -298,7 +336,7 @@
         $(document).ready(function () {
             var inboundOrderId;
             // When a <td> with the class 'text-center' is clicked
-            $('td.text-center').click(function () {
+            $('td.text-center-click').click(function () {
                 // Get the customer_order_id from the data attribute
                 inboundOrderId = $(this).data('inbound-order-id');
                 // Send an AJAX request to the server
@@ -325,7 +363,7 @@
                                 '<td>' + dulieu2[i].product_id + '</td>' +
                                 '<td>' + dulieu2[i].pname + '</td>' +
                                 '<td>' + dulieu2[i].quantity + '</td>' +
-                                '<td>' + dulieu2[i].inbound_price + '</td>' +
+                                '<td>' + dulieu2[i].TP + '</td>' +
                                 '</tr>';
 
                             tableBody.append(row);
@@ -391,7 +429,53 @@
                     }
                 });
             });
+            $('#updateButton').click(function () {
+                // Make an AJAX request to update the product details
+                $.ajax({
+                    type: 'POST',
+                    url: '/nhaphang/update',
+                    data: $('#updateForm').serialize(),
+                    success: function (response) {
+                        // Handle the server response if needed
+                        console.log(response);
+                        // Close the modal
+                        $('#detailModal').modal('hide');
+                        // Reload the page or update the data as needed
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Set up the modal event when it's shown
+            $('#updateStatus').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var inbound_order_id = button.data('inbound-order-id');
+                var modal = $(this);
+
+                // Make an AJAX request to get product details based on productCode
+                $.ajax({
+                    type: 'POST',
+                    url: '/nhaphang/chinhsua/info',
+                    data: { inbound_order_id: inbound_order_id },
+                    success: function (data) {
+                        // Fill in the form with product details
+                        modal.find('#status').val(data.status);
+                        modal.find('#inbound_order_id').text(data.inbound_order_id);
+
+                        modal.find('#inbound_order_idInput').val(data.inbound_order_id);
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
         });
+
 
     </script>
 

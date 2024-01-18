@@ -1,4 +1,4 @@
-CREATE TRIGGER UpdateInboundOrderDetailPrice
+CREATE OR ALTER TRIGGER UpdateInboundOrderDetailPrice
 ON Inbound_Order_Detail
 FOR INSERT, UPDATE
 AS

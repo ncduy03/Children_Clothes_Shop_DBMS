@@ -27,10 +27,9 @@ router.post('/tongquan', async (req, res) => {
     const value = Object.values(resultObject)[0];
 
     // Chuyển đổi giá trị thành số nguyên
-    const intValue1 = parseInt(value, 10);
     const result2 = await request.query(`SELECT * FROM dbo.BestEmployee(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`);
     const result1 = await sql.query(`SELECT * FROM dbo.BestSeller(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`);
-    res.render('tongquan.ejs', { intValue: intValue1, dulieu1: result1.recordset, dulieu2: result2.recordset })
+    res.render('tongquan.ejs', { intValue: value, dulieu1: result1.recordset, dulieu2: result2.recordset })
 })
 router.post('/tongquan/topbanchay', async (req, res) => {
     const batdau = req.body.start1;

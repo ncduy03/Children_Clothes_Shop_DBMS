@@ -32,7 +32,8 @@ router.post('/banhang/add', async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        const result1 = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id DESC`);
+        res.render('banhang', { dulieu: result1.recordset });
     }
 });
 
@@ -78,7 +79,7 @@ router.post('/banhang/chitiet', async (req, res) => {
     const request = new sql.Request();
     request.input('param', sql.Int, receivedParam);    // Perform necessary database queries or other operations
     // Assuming you have some data to send back
-    const result = await request.query(`SELECT p.name as pname, cod.product_id, cod.quantity, co.customer_order_id, c.name as cname, c.phone, co.order_date, cod.price FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id 
+    const result = await request.query(`SELECT p.name as pname, cod.product_id, cod.quantity, co.customer_order_id, c.name as cname, c.phone, co.order_date, FORMAT(cod.price, 'N0') as TP FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id 
                                                                                                             JOIN Customer_Order_Detail cod ON co.customer_order_id = cod.customer_order_id 
                                                                                                             JOIN Product p ON cod.product_id = p.product_id WHERE cod.customer_order_id = @param`);
     //const result1 = await sql.query(`SELECT 1`)
@@ -121,6 +122,39 @@ router.post('/banhang/chitiet/xoa', async (req, res) => {
     }
 
 })
+
+router.post('/banhang/update', async (req, res) => {
+    try {
+        const customer_order_id = req.body.customer_order_idInput;
+        const status = req.body.status;
+        const request = new sql.Request();
+        request.input('customer_order_id', sql.Int, customer_order_id);
+        request.input('status', sql.NVarChar, status);
+        console.log(customer_order_id);
+        console.log(status);
+        const result = await request.query(` EXEC UpdateCustomerOrder @customer_order_id, @status`);
+
+        if (result) console.log("Product details updated successfully");
+        const result1 = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        res.render('banhang', { dulieu: result1.recordset });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/banhang/chinhsua/info', async (req, res) => {
+    try {
+        const customer_order_id = req.body.customer_order_id;
+        const request = new sql.Request();
+        request.input('customer_order_id', sql.NVarChar, customer_order_id);
+        const result = await request.query(`SELECT * FROM Customer_Order WHERE customer_order_id = @customer_order_id`);
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 export default router;
 
 

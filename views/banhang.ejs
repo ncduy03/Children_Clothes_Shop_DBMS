@@ -101,6 +101,7 @@
                 data-bs-target="#exampleModal">
                 Thêm đơn hàng
             </button>
+            <p id='testobas'></p>
         </div>
     </div>
 
@@ -245,6 +246,38 @@
         </div>
     </div>
 
+    <div class="modal fade" id="updateStatus" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="myModalLabel">Thay đổi trạng thái</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/banhang/update" method="post" id="updateForm">
+                        <div class="form-group">
+                            <label for="customer_order_id">Mã đơn hàng:</label>
+                            <span id="customer_order_id"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newName">Trạng thái:</label>
+                                <input type="text" name="status" id="status" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="hidden" name="customer_order_idInput" id="customer_order_idInput" value="">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="updateButton"
+                        data-bs-dismiss="modal">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Tìm đơn hàng</p>
@@ -277,7 +310,7 @@
                 <button class="btn btn-outline-dark" type="submit">Find</button>
             </form>
         </div>
-        
+
         <div class="grid-item">
             <div class="container">
                 <table id="example" class="table table-striped table-hover table-bordered">
@@ -289,6 +322,7 @@
                             <th scope="col">Tổng số tiền</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Chi tiết</th>
+                            <th scope="col">Thay đổi trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -309,7 +343,11 @@
                                 <td>
                                     <%= dulieu[i].status %>
                                 </td>
-                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center"
+                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center-click"
+                                    data-customer-order-id="<%= dulieu[i].customer_order_id %>">
+                                    <img src="/img/navbar/pencil.svg">
+                                </td>
+                                <td data-bs-toggle="modal" data-bs-target="#updateStatus" class="text-center"
                                     data-customer-order-id="<%= dulieu[i].customer_order_id %>">
                                     <img src="/img/navbar/pencil.svg">
                                 </td>
@@ -353,7 +391,7 @@
         $(document).ready(function () {
             var customerOrderId;
             // When a <td> with the class 'text-center' is clicked
-            $('td.text-center').click(function () {
+            $('td.text-center-click').click(function () {
                 // Get the customer_order_id from the data attribute
                 customerOrderId = $(this).data('customer-order-id');
                 // Send an AJAX request to the server
@@ -380,7 +418,7 @@
                                 '<td>' + dulieu2[i].product_id + '</td>' +
                                 '<td>' + dulieu2[i].pname + '</td>' +
                                 '<td>' + dulieu2[i].quantity + '</td>' +
-                                '<td>' + dulieu2[i].price + '</td>' +
+                                '<td>' + dulieu2[i].TP + '</td>' +
                                 '</tr>';
 
                             tableBody.append(row);
@@ -417,7 +455,9 @@
 
                     },
                     error: function (error) {
+                        $('#testobas').html("Không thể insert!");
                         console.error('Error:', error);
+                        location.reload();
                     }
                 });
             });
@@ -438,6 +478,52 @@
                     success: function (data) {
                         // Xử lý dữ liệu nhận được từ server nếu cần
                         location.reload();
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+            // Set up the event listener for the product update button
+            $('#updateButton').click(function () {
+                // Make an AJAX request to update the product details
+                $.ajax({
+                    type: 'POST',
+                    url: '/banhang/update',
+                    data: $('#updateForm').serialize(),
+                    success: function (response) {
+                        // Handle the server response if needed
+                        console.log(response);
+                        // Close the modal
+                        $('#detailModal').modal('hide');
+                        // Reload the page or update the data as needed
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Set up the modal event when it's shown
+            $('#updateStatus').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var customer_order_id = button.data('customer-order-id');
+                var modal = $(this);
+
+                // Make an AJAX request to get product details based on productCode
+                $.ajax({
+                    type: 'POST',
+                    url: '/banhang/chinhsua/info',
+                    data: { customer_order_id: customer_order_id },
+                    success: function (data) {
+                        // Fill in the form with product details
+                        modal.find('#status').val(data.status);
+                        modal.find('#customer_order_id').text(data.customer_order_id);
+
+                        modal.find('#customer_order_idInput').val(data.customer_order_id);
 
 
                     },

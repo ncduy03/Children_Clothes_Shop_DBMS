@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="script.js"></script>
@@ -101,6 +101,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -111,37 +112,51 @@
                 </div>
                 <div class="modal-body">
                     <form action="/hanghoa/them" method="post">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label>Tên sản phẩm</label>
                                 <input type="text" name="ten" id="ten" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label>Mã phân loại</label>
                                 <input type="number" name="phanLoai" id="phanLoai" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>1 - Đồ bộ bé gái</p>
+                                <p>2 - Váy đầm bé gái</p>
+                                <p>3 - Áo bé gái</p>
+                                <p>4 - Đồ bơi bé gái</p>
+                                <p>5 - Quần Bé Gái</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>6 - Đồ bộ bé trai</p>
+                                <p>7 - Áo Bé Trai</p>
+                                <p>8 - Quần bé trai</p>
+                                <p>9 - Đồ bơi bé trai</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label>Giá Nhập</label>
                                 <input type="number" name="giaNhap" id="giaNhap" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label>Giá bán</label>
                                 <input type="number" name="giaBan" id="giaBan" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label>Tồn kho</label>
                                 <input type="number" name="tonKho" id="tonKho" class="form-control">
                             </div>
                         </div>
-
                 </div>
                 <div class="modal-footer">
                     <div class="mb-3">
@@ -152,6 +167,81 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa thông tin hàng hóa</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/hanghoa/chinhsua" method="post" id="updateForm">
+                        <div class="form-group">
+                            <label for="productId">Mã hàng:</label>
+                            <span id="productId"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newName">Tên hàng</label>
+                                <input type="text" name="newName" id="newName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newStock">Mã phân loại</label>
+                                <input type="number" name="newCategory" id="newCategory" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>1 - Đồ bộ bé gái</p>
+                                <p>2 - Váy đầm bé gái</p>
+                                <p>3 - Áo bé gái</p>
+                                <p>4 - Đồ bơi bé gái</p>
+                                <p>5 - Quần Bé Gái</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>6 - Đồ bộ bé trai</p>
+                                <p>7 - Áo Bé Trai</p>
+                                <p>8 - Quần bé trai</p>
+                                <p>9 - Đồ bơi bé trai</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newInboundPrice">Giá nhập</label>
+                                <input type="number" name="newInboundPrice" id="newInboundPrice" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newSalePrice">Giá bán</label>
+                                <input type="number" name="newOutboundPrice" id="newOutboundPrice" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="newStock">Tồn kho</label>
+                                <input type="text" name="newQuantity" id="newQuantity" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="hidden" name="productId" id="productIdInput" value="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="updateButton">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="grid-container">
         <div class="grid-item">
             <p class="fs-5 ms-2">Nhóm hàng</p>
@@ -180,12 +270,13 @@
                             <th scope="col">Giá nhập</th>
                             <th scope="col">Giá bán</th>
                             <th scope="col">Tồn kho</th>
+                            <th scope="col">Sửa</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% for (let i=0; i < dulieu.length; i++) { %>
                             <tr>
-                                <td>
+                                <td id="productId">
                                     <%= dulieu[i].product_id %>
                                 </td>
                                 <td>
@@ -203,6 +294,10 @@
                                 <td>
                                     <%= dulieu[i].quantity %>
                                 </td>
+                                <td data-bs-toggle="modal" data-bs-target="#detailModal" class="text-center"
+                                    data-productid="<%= dulieu[i].product_id %>">
+                                    <img src="/img/navbar/pencil.svg">
+                                </td>
                             </tr>
                             <% } %>
                     </tbody>
@@ -211,7 +306,57 @@
         </div>
     </div>
 
+    <script>
+        $(document).ready(function () {
+            // Set up the event listener for the product update button
+            $('#updateButton').click(function () {
+                // Make an AJAX request to update the product details
+                $.ajax({
+                    type: 'POST',
+                    url: '/hanghoa/chinhsua',
+                    data: $('#updateForm').serialize(),
+                    success: function (response) {
+                        // Handle the server response if needed
+                        console.log(response);
+                        // Close the modal
+                        $('#detailModal').modal('hide');
+                        // Reload the page or update the data as needed
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
 
+            // Set up the modal event when it's shown
+            $('#detailModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var productId = button.data('productid');
+                var modal = $(this);
+
+                // Make an AJAX request to get product details based on productCode
+                $.ajax({
+                    type: 'POST',
+                    url: '/hanghoa/chinhsua/info',
+                    data: { productId: productId },
+                    success: function (data) {
+                        // Fill in the form with product details
+                        modal.find('#productId').text(data.product_id);
+                        modal.find('#newName').val(data.name);
+                        modal.find('#newCategory').val(data.product_category_id);
+                        modal.find('#newInboundPrice').val(data.inbound_price);
+                        modal.find('#newOutboundPrice').val(data.outbound_price);
+                        modal.find('#newQuantity').val(data.quantity);
+                        modal.find('#productIdInput').val(data.product_id);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });        
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
