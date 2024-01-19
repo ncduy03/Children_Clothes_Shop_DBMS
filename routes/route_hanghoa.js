@@ -103,5 +103,56 @@ router.route('/hanghoa/xoa')
         }
     });
 
+router.post('/hanghoa/chinhsua', async (req, res) => {
+    try {
+        const productId = req.body.productId;
+        const newName = req.body.newName;
+        const newCategory = req.body.newCategory;
+        const newInboundPrice = req.body.newInboundPrice;
+        const newOutboundPrice = req.body.newOutboundPrice;
+        const newQuantity = req.body.newQuantity;
+
+        const request = new sql.Request();
+        request.input('product_id', sql.NVarChar, productId);
+        request.input('new_name', sql.NVarChar, newName);
+        request.input('new_category', sql.Int, newCategory);
+        request.input('new_inbound_price', sql.BigInt, newInboundPrice)
+        request.input('new_outbound_price', sql.BigInt, newOutboundPrice)
+        request.input('new_quantity', sql.Int, newQuantity)
+
+        const result = await request.query(`
+                EXEC UpdateProduct
+                @product_id = @product_id, 
+                @name = @new_name, 
+                @product_category_id = @new_category,
+                @inbound_price = @new_inbound_price,
+                @outbound_price = @new_outbound_price,
+                @quantity = @new_quantity
+            `);
+
+        if (result) console.log("Product details updated successfully");
+        const updatedResult = await sql.query(`SELECT * FROM Product`);
+        res.render('hanghoa', { dulieu: updatedResult.recordset });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// Route xử lý lấy thông tin hàng hóa để hiển thị trong modal
+router.post('/hanghoa/chinhsua/info', async (req, res) => {
+    try {
+        const productId = req.body.productId;
+        const request = new sql.Request();
+        request.input('product_id', sql.NVarChar, productId);
+        const result = await request.query(`SELECT * FROM Product WHERE product_id = @product_id`);
+        console.log(result.recordset[0]);
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 export default router;
