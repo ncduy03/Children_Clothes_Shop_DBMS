@@ -108,4 +108,19 @@ router.post('/doitac/chinhsua/info', async (req, res) => {
     }
 });
 
+
+// Route xử lý lấy thông tin đối tác để hiển thị trong modal
+router.post('/doitac/chinhsua/info', async (req, res) => {
+    try {
+        const manufacturerId = req.body.manufacturerId;
+        const request = new sql.Request();
+        request.input('manufacturer_id', sql.NVarChar, manufacturerId);
+        const result = await request.query(`SELECT * FROM Manufacturer WHERE manufacturer_id = @manufacturer_id`);
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 export default router;

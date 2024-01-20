@@ -133,7 +133,8 @@ router.post('/banhang/update', async (req, res) => {
         const result = await request.query(` EXEC UpdateCustomerOrder @customer_order_id, @status`);
 
         if (result) console.log("Product details updated successfully");
-        const result1 = await sql.query(`SELECT c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id WHERE co.customer_order_id=${customer_order_id}`);
+
+        const result1 = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { dulieu: result1.recordset });
     } catch (error) {
         console.error(error);
