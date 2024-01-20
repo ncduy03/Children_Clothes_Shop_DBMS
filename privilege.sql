@@ -1,6 +1,6 @@
 -- Create login for manager and employee
-EXEC sp_addlogin 'manager', 'manager', 'ChildrenShopDBMS';
-EXEC sp_addlogin 'employee', 'employee', 'ChildrenShopDBMS';
+EXEC sp_addlogin 'manager', 'manager', 'ChildrenShopDBMS3';
+EXEC sp_addlogin 'employee', 'employee', 'ChildrenShopDBMS3';
 
 -- Create role for employees with restricted access
 CREATE ROLE EmployeeRole;
@@ -13,7 +13,7 @@ FOR LOGIN employee
 GRANT SELECT, INSERT, UPDATE, DELETE ON dbo.Customer_Order TO EmployeeRole;
 GRANT SELECT, INSERT, UPDATE, DELETE ON dbo.Customer_Order_Detail TO EmployeeRole;
 GRANT SELECT, INSERT, UPDATE ON dbo.Customer TO EmployeeRole;
-GRANT CONNECT ON DATABASE::ChildrenShopDBMS TO EmployeeRole;
+GRANT CONNECT ON DATABASE::ChildrenShopDBMS3 TO EmployeeRole;
 GRANT SELECT ON dbo.Employee TO EmployeeRole
 
 -- Add employee user to EmployeeRole
@@ -28,8 +28,8 @@ FOR LOGIN manager
 
 
 -- Grant full access to all tables in the database for managers
-GRANT SELECT, INSERT, UPDATE, DELETE ON DATABASE::ChildrenShopDBMS TO ManagerRole;
-GRANT CONNECT ON DATABASE::ChildrenShopDBMS TO ManagerRole;
+GRANT SELECT, INSERT, UPDATE, DELETE ON DATABASE::ChildrenShopDBMS3 TO ManagerRole;
+GRANT CONNECT ON DATABASE::ChildrenShopDBMS3 TO ManagerRole;
 
 
 -- Add manager user to ManagerRole

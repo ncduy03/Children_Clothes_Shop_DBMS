@@ -11,8 +11,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="script.js"></script>
 
 </head>
@@ -119,12 +119,6 @@
                             <div class="mb-3">
                                 <label>Mã khách hàng</label>
                                 <input type="number" name="ma" id="ma" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Trạng thái</label>
-                                <input type="text" name="trangthai" id="trangthai" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -335,7 +329,7 @@
                                     <%= dulieu[i].name %>
                                 </td>
                                 <td>
-                                    <%= dulieu[i].order_date %>
+                                    <%= new Date(dulieu[i].order_date).toLocaleString(undefined, { timeZone: 'UTC' }) %>
                                 </td>
                                 <td>
                                     <%= dulieu[i].TP %>
@@ -403,9 +397,9 @@
                         var dulieu2 = data.dulieu2;
                         var tableBody = $('#my_table tbody'); // Thay yourTableId bằng ID thực tế của bảng
                         var modalBodyContent = '';
-
+                        var date = new Date(dulieu2[0].order_date).toLocaleString(undefined, { timeZone: 'UTC' });
                         // Tạo nội dung cho thẻ p từ dulieu2
-                        modalBodyContent += 'Mã hóa đơn: ' + dulieu2[0].customer_order_id + '<br>' + 'Tên khách hàng: ' + dulieu2[0].cname + '<br>' + ' Số điện thoại: ' + dulieu2[0].phone + '<br>' + 'Thời gian: ' + dulieu2[0].order_date + '<br>';
+                        modalBodyContent += 'Mã hóa đơn: ' + dulieu2[0].customer_order_id + '<br>' + 'Tên khách hàng: ' + dulieu2[0].cname + '<br>' + ' Số điện thoại: ' + dulieu2[0].phone + '<br>' + 'Thời gian: ' + date + '<br>';
 
                         // Đặt nội dung vào thẻ p
                         $('#modal_body').html(modalBodyContent);

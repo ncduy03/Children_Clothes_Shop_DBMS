@@ -306,7 +306,7 @@
                                     <%= dulieu[i].manufacturer_name %>
                                 </td>
                                 <td>
-                                    <%= dulieu[i].order_date %>
+                                    <%= new Date(dulieu[i].order_date).toLocaleString(undefined, { timeZone: 'UTC' }) %>
                                 </td>
                                 <td>
                                     <%= dulieu[i].TP %>

@@ -18,14 +18,12 @@ const router = express.Router()
 router.post('/banhang/add', async (req, res) => {
     try {
         const id = req.body.ma;
-        const TrangThai = req.body.trangthai;
         const Nhanvien = req.body.ma_nhanvien;
         const request = new sql.Request();
         request.input('ma', sql.Int, id);
-        request.input('trangthai', sql.NVarChar, TrangThai);
         request.input('nhanvien', sql.Int, Nhanvien);
         const result = await request.query(`
-    EXEC AddCustomerOrder @ma, @trangthai, @nhanvien`);
+    EXEC AddCustomerOrder @ma, @nhanvien`);
         if (result) console.log("Trueeee");
         const result1 = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id DESC`);
         res.render('banhang', { dulieu: result1.recordset });
@@ -117,7 +115,7 @@ router.post('/banhang/chitiet/xoa', async (req, res) => {
     const result = await sql.query(sqlQuery);
     if (result) {
         const result1 = await sql.query(`SELECT 1`);
-        const result = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
+        const result = await sql.query(`SELECT TOP 1000 c.name, FORMAT(co.total_price, 'N0') as TP, co.customer_order_id, co.order_date, co.status FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id ORDER BY co.customer_order_id`);
         res.render('banhang', { customerOrderId: 0, dulieu: result.recordset, dulieu2: result1.recordset });
     }
 
@@ -135,6 +133,7 @@ router.post('/banhang/update', async (req, res) => {
         const result = await request.query(` EXEC UpdateCustomerOrder @customer_order_id, @status`);
 
         if (result) console.log("Product details updated successfully");
+
         const result1 = await sql.query(`SELECT TOP 1000 c.name, co.* FROM Customer c JOIN Customer_Order co ON c.customer_id = co.customer_id`);
         res.render('banhang', { dulieu: result1.recordset });
     } catch (error) {
