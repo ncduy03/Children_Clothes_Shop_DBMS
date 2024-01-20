@@ -1,6 +1,6 @@
-﻿CREATE OR ALTER TRIGGER UpdateProductOnShippedInboundOrder
+CREATE OR ALTER TRIGGER UpdateProductOnShippedInboundOrder
 ON Inbound_Order
-AFTER UPDATE
+FOR UPDATE
 AS
 BEGIN
 	DECLARE @status NVARCHAR(10)
@@ -12,5 +12,6 @@ BEGIN
 		FROM Product AS P
 		JOIN Inbound_Order_Detail AS IOD ON IOD.product_id = P.product_id
 		JOIN Inbound_Order AS IO ON IOD.inbound_order_id = IO.inbound_order_id
+		JOIN inserted AS I on I.inbound_order_id = IO.inbound_order_id
 	END;
 END;
